@@ -96,6 +96,7 @@ CREATE TABLE order_offer
 (
     id               BIGSERIAL PRIMARY KEY,
     order_product_id BIGSERIAL REFERENCES order_product (id) ON DELETE CASCADE,
+    order_id         BIGSERIAL REFERENCES orders (id) ON DELETE CASCADE,
     offer_id         bigint                      NOT NULL,
     starts_at        timestamp without time zone NOT NULL,
     ends_at          timestamp without time zone NOT NULL,
@@ -105,5 +106,6 @@ CREATE TABLE order_offer
     discount_applied numeric(15, 2)
 );
 
+CREATE INDEX order_offer_order_id_idx ON order_product (order_id int8_ops);
 CREATE INDEX order_offer__order_product_id_idx ON order_offer (order_product_id int8_ops);
 CREATE INDEX order_offer_offer_id_idx ON order_offer (offer_id int8_ops);
