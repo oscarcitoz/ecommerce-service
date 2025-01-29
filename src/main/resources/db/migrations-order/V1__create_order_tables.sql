@@ -9,6 +9,7 @@ CREATE TABLE orders
     id                        BIGSERIAL PRIMARY KEY,
     total_value               numeric(15, 2)                                        NOT NULL,
     notes                     character varying(255),
+    type                      character varying(255)                                NOT NULL,
     created_at                timestamp without time zone                           NOT NULL,
     updated_at                timestamp without time zone                           NOT NULL,
     state                     character varying(255) REFERENCES order_states (name) NOT NULL,
@@ -20,33 +21,31 @@ CREATE INDEX orders_state_idx ON orders (state text_ops);
 
 CREATE TABLE order_customer
 (
-    id                    BIGSERIAL PRIMARY KEY,
-    order_id              BIGSERIAL REFERENCES orders (id) ON DELETE CASCADE NOT NULL,
-    name                  character varying(255),
-    customer_address      character varying(255),
-    ip_origin             character varying(100),
-    prefix_phone          character varying(10),
-    phone                 character varying(255),
-    email                 character varying(255),
-    created_at            timestamp without time zone                        NOT NULL,
-    customer_id           character varying(255)                             NOT NULL,
-    identification_number character varying(255),
-    identification_type   character varying(255),
-    last_name             character varying(255)
+    id           BIGSERIAL PRIMARY KEY,
+    order_id     BIGSERIAL REFERENCES orders (id) ON DELETE CASCADE NOT NULL,
+    name         character varying(255)                             NOT NULL,
+    address      character varying(255)                             NOT NULL,
+    ip_origin    character varying(100),
+    prefix_phone character varying(10)                              NOT NULL,
+    phone        character varying(255)                             NOT NULL,
+    email        character varying(255)                             NOT NULL,
+    created_at   timestamp without time zone                        NOT NULL,
+    last_name    character varying(255)                             NOT NULL
 );
 
 CREATE UNIQUE INDEX order_customer_order_id_idx ON order_customer (order_id int8_ops);
 CREATE INDEX order_customer_email_idx ON order_customer (email text_ops);
 CREATE INDEX order_customer_phone_idx ON order_customer (phone text_ops, prefix_phone text_ops);
-CREATE INDEX order_customer_id_idx ON order_customer (customer_id text_ops);
 
 
 CREATE TABLE order_store
 (
     id         BIGSERIAL PRIMARY KEY,
     owner_id   character varying(100)                             NOT NULL,
+    name       character varying(255),
+    last_name  character varying(255),
+    email      character varying(255)                             NOT NULL,
     order_id   BIGSERIAL REFERENCES orders (id) ON DELETE CASCADE NOT NULL,
-    url        character varying(255)                             NOT NULL,
     created_at timestamp without time zone                        NOT NULL
 );
 
