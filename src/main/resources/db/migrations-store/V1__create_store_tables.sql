@@ -1,7 +1,7 @@
 CREATE TABLE products
 (
     id          character varying(100) PRIMARY KEY,
-    owner_id    character varying(100),
+    owner_id    character varying(100) NOT NULL ,
     name        character varying(255)      NOT NULL,
     price       numeric(15, 2)              NOT NULL,
     available   boolean                     NOT NULL,
