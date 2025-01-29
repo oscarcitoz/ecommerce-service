@@ -16,13 +16,13 @@ class Offer {
     @field:JsonProperty("id")
     var id: Long? = null
 
-    @Column(name = "offer_name", nullable = false)
-    @field:JsonProperty("offer_name")
-    var offerName: String = ""
+    @Column(name = "name", nullable = false)
+    @field:JsonProperty("name")
+    var name: String = ""
 
-    @Column(name = "offer_description", nullable = false)
-    @field:JsonProperty("offer_description")
-    var offerDescription: String = ""
+    @Column(name = "description", nullable = false)
+    @field:JsonProperty("description")
+    var description: String = ""
 
     @Column(name = "enabled", nullable = false)
     @field:JsonProperty("enabled")

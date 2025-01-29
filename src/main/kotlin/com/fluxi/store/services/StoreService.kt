@@ -4,6 +4,8 @@ import com.fluxi.core.extensions.generateId
 import com.fluxi.store.models.Product
 import jakarta.inject.Singleton
 import com.fluxi.store.repositories.ProductRepository
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.exceptions.HttpStatusException
 import java.time.LocalDateTime
 import java.util.UUID
 import java.util.NoSuchElementException
@@ -34,10 +36,10 @@ class StoreService(private val productRepository: ProductRepository) : StoreServ
     override fun update(id: String, product: Product): Product {
         val existingProduct = productRepository.findById(id)
             .filter { it.deletedAt == null }
-            .orElseThrow { NoSuchElementException("Producto no encontrado con ID: $id") }
+            .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "Producto no encontrado con ID: $id") }
 
         if (existingProduct.ownerId != product.ownerId) {
-            throw IllegalArgumentException("No tienes permiso para actualizar este producto")
+            throw HttpStatusException(HttpStatus.BAD_REQUEST, "No tienes permiso para actualizar este producto")
         }
 
         existingProduct.apply {

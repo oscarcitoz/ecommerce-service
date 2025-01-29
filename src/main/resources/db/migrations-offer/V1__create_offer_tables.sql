@@ -6,21 +6,21 @@ CREATE TABLE discount_types
 
 CREATE TABLE offers
 (
-    id                BIGSERIAL PRIMARY KEY,
-    offer_name        character varying(255)      NOT NULL,
-    offer_description character varying(500)      NOT NULL,
-    enabled           boolean                     NOT NULL,
-    created_at        timestamp without time zone NOT NULL,
-    updated_at        timestamp without time zone NOT NULL,
-    discount_type     character varying(255)      NOT NULL REFERENCES discount_types (id),
-    discount_value    numeric(15, 2)              NOT NULL,
-    owner_id          character varying(255)      NOT NULL,
-    product_id        character varying(255)      NOT NULL
+    id             BIGSERIAL PRIMARY KEY,
+    name           character varying(255)      NOT NULL,
+    description    character varying(500)      NOT NULL,
+    enabled        boolean                     NOT NULL,
+    created_at     timestamp without time zone NOT NULL,
+    updated_at     timestamp without time zone NOT NULL,
+    discount_type  character varying(255)      NOT NULL REFERENCES discount_types (id),
+    discount_value numeric(15, 2)              NOT NULL,
+    owner_id       character varying(255)      NOT NULL,
+    product_id     character varying(255)      NOT NULL
 );
 
 
 CREATE INDEX offers_owner_id_idx ON offers (owner_id text_ops);
-CREATE UNIQUE INDEX offers_product_id_owner_type_idx ON offers (product_id text_ops);
+CREATE INDEX offers_product_id_owner_type_idx ON offers (product_id text_ops);
 
 CREATE TABLE offer_customer
 (
