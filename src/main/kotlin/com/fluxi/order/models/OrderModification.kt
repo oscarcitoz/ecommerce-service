@@ -1,7 +1,7 @@
 package com.fluxi.order.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType
+import io.hypersistence.utils.hibernate.type.json.JsonType
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
 import org.hibernate.annotations.Type
@@ -25,7 +25,7 @@ class OrderModification {
     @field:JsonProperty("event_id")
     var eventId: String = ""
 
-    @Type(value = JsonBinaryType::class)
+    @Type(JsonType::class)
     @Column(name = "raw", columnDefinition = "jsonb")
     @field:JsonProperty("raw")
     var raw: Map<String, Any>? = null

@@ -1,7 +1,7 @@
 package com.fluxi.order.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType
+import io.hypersistence.utils.hibernate.type.json.JsonType
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
 import org.hibernate.annotations.Type
@@ -30,7 +30,7 @@ class OrderProduct {
     @field:JsonProperty("name")
     var name: String = ""
 
-    @Type(value = JsonBinaryType::class)
+    @Type(JsonType::class)
     @Column(name = "images", nullable = false, columnDefinition = "jsonb")
     @field:JsonProperty("images")
     var images: List<String> = listOf()
