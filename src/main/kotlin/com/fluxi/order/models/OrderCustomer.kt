@@ -19,47 +19,35 @@ class OrderCustomer {
     @field:JsonProperty("order_id")
     var orderId: Long = 0L
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     @field:JsonProperty("name")
-    var name: String? = null
+    var name: String = ""
 
-    @Column(name = "customer_address")
-    @field:JsonProperty("customer_address")
-    var customerAddress: String? = null
+    @Column(name = "address", nullable = false)
+    @field:JsonProperty("address")
+    var address: String = ""
 
     @Column(name = "ip_origin")
     @field:JsonProperty("ip_origin")
     var ipOrigin: String? = null
 
-    @Column(name = "prefix_phone")
+    @Column(name = "prefix_phone", nullable = false)
     @field:JsonProperty("prefix_phone")
-    var prefixPhone: String? = null
+    var prefixPhone: String = "|"
 
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     @field:JsonProperty("phone")
-    var phone: String? = null
+    var phone: String = ""
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     @field:JsonProperty("email")
-    var email: String? = null
+    var email: String = ""
 
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
 
-    @Column(name = "customer_id", nullable = false)
-    @field:JsonProperty("customer_id")
-    var customerId: String = ""
-
-    @Column(name = "identification_number")
-    @field:JsonProperty("identification_number")
-    var identificationNumber: String? = null
-
-    @Column(name = "identification_type")
-    @field:JsonProperty("identification_type")
-    var identificationType: String? = null
-
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     @field:JsonProperty("last_name")
-    var lastName: String? = null
+    var lastName: String = ""
 } 

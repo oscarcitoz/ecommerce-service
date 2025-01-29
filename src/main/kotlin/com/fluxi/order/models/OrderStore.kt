@@ -23,9 +23,17 @@ class OrderStore {
     @field:JsonProperty("order_id")
     var orderId: Long = 0L
 
-    @Column(name = "url", nullable = false)
-    @field:JsonProperty("url")
-    var url: String = ""
+    @Column(name = "email", nullable = false)
+    @field:JsonProperty("email")
+    var email: String = ""
+
+    @Column(name = "name", nullable = true)
+    @field:JsonProperty("name")
+    var name: String? = null
+
+    @Column(name = "last_name", nullable = true)
+    @field:JsonProperty("last_name")
+    var lastName: String? = null
 
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")
