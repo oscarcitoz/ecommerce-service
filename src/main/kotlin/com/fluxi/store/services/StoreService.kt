@@ -1,5 +1,6 @@
 package com.fluxi.store.services
 
+import com.fluxi.core.extensions.BigDecimalExtension.setDefaultScale
 import com.fluxi.core.extensions.generateId
 import com.fluxi.store.models.Product
 import jakarta.inject.Singleton
@@ -22,6 +23,7 @@ class StoreService(private val productRepository: ProductRepository) : StoreServ
     override fun saveProduct(product: Product): Product {
         product.apply {
             id = generateId()
+            price = price.setDefaultScale()
         }
 
         return productRepository.save(product)
@@ -44,7 +46,7 @@ class StoreService(private val productRepository: ProductRepository) : StoreServ
 
         existingProduct.apply {
             name = product.name
-            price = product.price
+            price = product.price.setDefaultScale()
             available = product.available
             images = product.images
             description = product.description

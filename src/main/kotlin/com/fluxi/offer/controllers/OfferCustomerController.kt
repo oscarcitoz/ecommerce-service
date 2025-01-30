@@ -14,12 +14,16 @@ class OfferCustomerController(private val offerCustomerService: OfferCustomerSer
     }
 
     @Put("/{id}")
-    fun update(id: Long, @Body offerCustomer: OfferCustomer, @Header("owner-id") ownerId: String): OfferCustomer? {
+    fun update(
+        @PathVariable(value = "id") id: Long,
+        @Body offerCustomer: OfferCustomer,
+        @Header("owner-id") ownerId: String
+    ): OfferCustomer? {
         return offerCustomerService.update(id, offerCustomer, ownerId)
     }
 
     @Get("/order/{orderId}")
-    fun findByOrderId(orderId: Long): List<OfferCustomer> {
+    fun findByOrderId(@PathVariable(value = "orderId") orderId: Long): List<OfferCustomer> {
         return offerCustomerService.findByOrderId(orderId)
     }
 } 

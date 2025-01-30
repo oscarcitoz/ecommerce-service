@@ -10,12 +10,13 @@ import jakarta.persistence.*
 @PersistenceContext(name = "order")
 class OrderState {
     @Id
-    @field:JsonProperty("name")
-    var name: String = ""
+    @field:JsonProperty("id")
+    var id: String = ""
 
     companion object {
         const val CREATED = "CREATED"
         const val IN_PROGRESS = "IN_PROGRESS"
         const val FINISHED = "FINISHED"
+        const val CANCELED = "CANCELED"
     }
 } 

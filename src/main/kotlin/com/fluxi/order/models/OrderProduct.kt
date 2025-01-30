@@ -36,10 +36,6 @@ class OrderProduct {
     @field:JsonProperty("images")
     var images: List<String> = listOf()
 
-    @Column(name = "value_offer")
-    @field:JsonProperty("value_offer")
-    var valueOffer: BigDecimal? = null
-
     @Column(name = "units", nullable = false)
     @field:JsonProperty("units")
     var units: Int = 0

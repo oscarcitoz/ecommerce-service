@@ -27,10 +27,12 @@ CREATE TABLE offer_customer
     id          BIGSERIAL PRIMARY KEY,
     offer_id    BIGSERIAL REFERENCES offers (id) NOT NULL,
     order_id    BIGSERIAL                        NOT NULL,
-    enabled     boolean                          NOT NULL,
     created_at  timestamp without time zone      NOT NULL,
     starts_at   timestamp without time zone      NOT NULL,
-    ends_at     timestamp without time zone      NOT NULL
+    ends_at     timestamp without time zone      NOT NULL,
+    product_id     character varying(255)      NOT NULL,
+    discount_type  character varying(255)      NOT NULL REFERENCES discount_types (id),
+    discount_value numeric(15, 2)              NOT NULL
 );
 
 CREATE INDEX offer_customer_offer_id_idx ON offer_customer (offer_id int8_ops);

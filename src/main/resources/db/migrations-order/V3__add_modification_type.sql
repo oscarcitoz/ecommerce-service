@@ -1,0 +1,1 @@
+INSERT INTO "public"."order_modification_types"("id") VALUES('rejected_upsell') RETURNING  "id";
