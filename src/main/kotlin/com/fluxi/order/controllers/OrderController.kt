@@ -19,7 +19,7 @@ class OrderController(private val orderService: OrderServiceInterface) {
         return orderService.createOrder(request)
     }
 
-    @Put("{orderId}/{modificationType}")
+    @Put("{orderId}/modification/{modificationType}")
     fun createOrderModification(
         @Body request: Map<String, Any>?,
         @PathVariable(value = "orderId") orderId: Long,
@@ -32,5 +32,19 @@ class OrderController(private val orderService: OrderServiceInterface) {
         }
 
         return orderService.orderModification(orderModification)
+    }
+
+    @Put("/{hashId}/modification-hash/{modificationType}")
+    fun createOrderModificationHash(
+        @Body request: Map<String, Any>?,
+        @PathVariable(value = "hashId") hashId: String,
+        @PathVariable(value = "modificationType") modificationType: String,
+    ): OrderModification {
+        val orderModification = OrderModification().apply {
+            this.orderModificationType = modificationType
+            this.raw = request
+        }
+
+        return orderService.orderModificationHash(orderModification, hashId)
     }
 } 

@@ -10,6 +10,7 @@ import com.fluxi.order.models.OrderProductOffer
 import com.fluxi.order.repositories.OrderProductOfferRepository
 import com.fluxi.order.repositories.OrderProductRepository
 import com.fluxi.order.repositories.OrderRepository
+import com.fluxi.order.repositories.OrderStoreRepository
 import com.fluxi.store.models.Product
 import com.fluxi.store.services.StoreServiceInterface
 import io.micronaut.http.HttpStatus
@@ -17,30 +18,35 @@ import io.micronaut.http.exceptions.HttpStatusException
 import jakarta.inject.Singleton
 
 @Singleton
-class AddProductOrderModification(
+open class AddProductOrderModification(
     private val orderRepository: OrderRepository,
+    private val orderStoreRepository: OrderStoreRepository,
     private val orderProductRepository: OrderProductRepository,
     private val orderProductOfferRepository: OrderProductOfferRepository,
     private val storeServiceInterface: StoreServiceInterface,
     private val offerCustomerServiceInterface: OfferCustomerServiceInterface,
     private val orderTotalCalculatorInterface: OrderTotalCalculatorInterface,
 ) : BaseOrderModification {
+
     override fun makeModification(orderModification: OrderModification): OrderModification {
         val productId = orderModification.raw?.get("product_id") as String
         val units = orderModification.raw?.get("units") as? Int ?: 1
-        val product = this.storeServiceInterface.findProductById(productId)
+        val orderStore = this.orderStoreRepository.findByOrderId(orderModification.orderId)
+            .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "Order Store Not Exists") }
+
+        val product = this.storeServiceInterface.findProductByIdAndOwnerId(productId, orderStore.ownerId)
         val offerCustomer =
             this.offerCustomerServiceInterface.findByOrderIdActive(orderModification.orderId, product.id)
         val orderProduct = this.getOrderProduct(orderModification, units, product)
 
-        offerCustomer?.let { this.createOrderProductOffer(orderProduct, offerCustomer) }
-
-        this.orderProductRepository.save(
+        val orderProductSaved = this.orderProductRepository.save(
             this.orderTotalCalculatorInterface.calculateTotalProduct(
                 orderProduct,
                 offerCustomer
             )
         )
+
+        offerCustomer?.let { this.createOrderProductOffer(orderProductSaved, offerCustomer) }
 
         this.orderRepository.update(
             this.orderTotalCalculatorInterface.calculateTotalOrder(

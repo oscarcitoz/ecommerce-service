@@ -27,7 +27,7 @@ class Offer {
 
     @Column(name = "enabled", nullable = false)
     @field:JsonProperty("enabled")
-    var enabled: Boolean = false
+    var enabled: Boolean = true
 
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")

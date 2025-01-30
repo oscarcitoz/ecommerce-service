@@ -7,6 +7,7 @@ CREATE TABLE orders
 (
     id                        BIGSERIAL PRIMARY KEY,
     total_value               numeric(15, 2)                                      NOT NULL,
+    hash_id                   character varying(100) UNIQUE,
     notes                     character varying(255),
     created_at                timestamp without time zone                         NOT NULL,
     updated_at                timestamp without time zone                         NOT NULL,

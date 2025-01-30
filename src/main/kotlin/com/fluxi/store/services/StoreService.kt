@@ -35,6 +35,12 @@ class StoreService(private val productRepository: ProductRepository) : StoreServ
             .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "Producto no encontrado con ID: $id") }
     }
 
+    override fun findProductByIdAndOwnerId(id: String, ownerId: String): Product {
+        return productRepository.findById(id)
+            .filter { it.deletedAt == null && it.ownerId == ownerId }
+            .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "Producto no encontrado con ID: $id") }
+    }
+
     override fun updateProduct(id: String, product: Product): Product {
         val existingProduct = productRepository.findById(id)
             .filter { it.deletedAt == null }
