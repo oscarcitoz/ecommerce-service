@@ -1,4 +1,4 @@
-package com.fluxi.offer.models
+package com.fluxi.order.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.micronaut.serde.annotation.Serdeable
@@ -9,15 +9,15 @@ import jakarta.persistence.Table
 
 @Serdeable
 @Entity
-@Table(name = "discount_types")
-@PersistenceContext(name = "offer")
-class DiscountType {
+@Table(name = "order_modification_types")
+@PersistenceContext(name = "order")
+class OrderModificationType {
     @Id
     @field:JsonProperty("id")
     var id: String = ""
 
     companion object {
-        const val PERCENTAGE = "PERCENTAGE"
-        const val VALUE = "VALUE"
+        const val ADD_PRODUCT = "add_product"
+        const val REJECTED_UPSELL = "rejected_upsell"
     }
-} 
+}

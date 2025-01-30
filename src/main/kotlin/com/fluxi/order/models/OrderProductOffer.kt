@@ -52,8 +52,4 @@ class OrderProductOffer {
     @Column(name = "discount_value", nullable = false)
     @field:JsonProperty("discount_value")
     var discountValue: BigDecimal = BigDecimal.ZERO
-
-    @Column(name = "discount_applied", nullable = false)
-    @field:JsonProperty("discount_applied")
-    var discountApplied: BigDecimal = BigDecimal.ZERO
 } 

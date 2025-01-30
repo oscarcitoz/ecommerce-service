@@ -49,18 +49,22 @@ CREATE TABLE order_store
 CREATE INDEX order_store_owner_id_idx ON order_store (owner_id text_ops);
 CREATE UNIQUE INDEX order_store_order_id_idx ON order_store (order_id int8_ops);
 
+CREATE TABLE order_modification_types
+(
+    id character varying(50) PRIMARY KEY
+);
 
 CREATE TABLE order_modifications
 (
-    id         BIGSERIAL PRIMARY KEY,
-    order_id   BIGSERIAL REFERENCES orders (id) ON DELETE CASCADE NOT NULL,
-    event_id   character varying(500)                             NOT NULL,
-    raw        jsonb,
-    created_at timestamp without time zone                        NOT NULL
+    id                      BIGSERIAL PRIMARY KEY,
+    order_id                BIGSERIAL REFERENCES orders (id) ON DELETE CASCADE                               NOT NULL,
+    order_modification_type character varying(50) REFERENCES order_modification_types (id) ON DELETE CASCADE NOT NULL,
+    raw                     jsonb,
+    created_at              timestamp without time zone                                                      NOT NULL
 );
 
 CREATE INDEX order_modifications_order_id_idx ON order_modifications (order_id int8_ops);
-CREATE INDEX order_modifications_event_event_id_idx ON order_modifications (event_id text_ops);
+CREATE INDEX order_modifications_order_modification_type_idx ON order_modifications (order_modification_type text_ops);
 
 
 
@@ -71,7 +75,6 @@ CREATE TABLE order_product
     product_id                character varying(255)      NOT NULL,
     name                      character varying(255)      NOT NULL,
     images                    jsonb                       NOT NULL,
-    value_offer               numeric(15, 2),
     units                     integer                     NOT NULL,
     unit_price                numeric(15, 2)              NOT NULL,
     unit_price_with_discount  numeric(15, 2)              NOT NULL,
@@ -96,8 +99,7 @@ CREATE TABLE order_product_offer
     ends_at          timestamp without time zone                               NOT NULL,
     created_at       timestamp without time zone                               NOT NULL,
     discount_type    character varying(255)                                    NOT NULL,
-    discount_value   numeric(15, 2)                                            NOT NULL,
-    discount_applied numeric(15, 2)                                            NOT NULL
+    discount_value   numeric(15, 2)                                            NOT NULL
 );
 
 CREATE INDEX order_product_offer_order_id_idx ON order_product_offer (order_id int8_ops);

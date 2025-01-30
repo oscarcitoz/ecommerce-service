@@ -22,9 +22,9 @@ class OrderModification {
     @field:JsonProperty("order_id")
     var orderId: Long = 0L
 
-    @Column(name = "event_id", nullable = false)
-    @field:JsonProperty("event_id")
-    var eventId: String = ""
+    @Column(name = "order_modification_type", nullable = false)
+    @field:JsonProperty("order_modification_type")
+    var orderModificationType: String = ""
 
     @Type(JsonType::class)
     @Column(name = "raw", columnDefinition = "jsonb")

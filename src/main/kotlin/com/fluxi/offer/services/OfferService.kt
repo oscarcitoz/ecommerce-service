@@ -44,7 +44,9 @@ class OfferService(private val offerRepository: OfferRepository) : OfferServiceI
         return offerRepository.update(existingOffer)
     }
 
-    override fun findByOwnerId(ownerId: String) = offerRepository.findByOwnerId(ownerId)
+    override fun findByOwnerId(ownerId: String): List<Offer> {
+        return offerRepository.findByOwnerId(ownerId).filter { it.enabled }
+    }
 
     override fun findByProductId(productId: String) = offerRepository.findByProductId(productId)
 } 
