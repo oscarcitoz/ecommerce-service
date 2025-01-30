@@ -1,18 +1,17 @@
 CREATE TABLE order_states
 (
-    id        character varying(50) PRIMARY KEY
+    id character varying(50) PRIMARY KEY
 );
 
 CREATE TABLE orders
 (
     id                        BIGSERIAL PRIMARY KEY,
-    total_value               numeric(15, 2)                                        NOT NULL,
+    total_value               numeric(15, 2)                                      NOT NULL,
     notes                     character varying(255),
-    type                      character varying(255)                                NOT NULL,
-    created_at                timestamp without time zone                           NOT NULL,
-    updated_at                timestamp without time zone                           NOT NULL,
+    created_at                timestamp without time zone                         NOT NULL,
+    updated_at                timestamp without time zone                         NOT NULL,
     state                     character varying(255) REFERENCES order_states (id) NOT NULL,
-    total_value_with_discount numeric(15, 2)                                        NOT NULL
+    total_value_with_discount numeric(15, 2)                                      NOT NULL
 );
 
 CREATE INDEX orders_state_idx ON orders (state text_ops);
@@ -41,8 +40,6 @@ CREATE TABLE order_store
 (
     id         BIGSERIAL PRIMARY KEY,
     owner_id   character varying(100)                             NOT NULL,
-    name       character varying(255),
-    last_name  character varying(255),
     email      character varying(255)                             NOT NULL,
     order_id   BIGSERIAL REFERENCES orders (id) ON DELETE CASCADE NOT NULL,
     created_at timestamp without time zone                        NOT NULL
@@ -89,7 +86,7 @@ CREATE INDEX order_product_order_id_idx ON order_product (order_id int8_ops);
 CREATE INDEX order_product_product_id_idx ON order_product (product_id text_ops);
 
 
-CREATE TABLE order_offer
+CREATE TABLE order_product_offer
 (
     id               BIGSERIAL PRIMARY KEY,
     order_product_id BIGSERIAL REFERENCES order_product (id) ON DELETE CASCADE NOT NULL,
@@ -103,6 +100,6 @@ CREATE TABLE order_offer
     discount_applied numeric(15, 2)                                            NOT NULL
 );
 
-CREATE INDEX order_offer_order_id_idx ON order_product (order_id int8_ops);
-CREATE INDEX order_offer__order_product_id_idx ON order_offer (order_product_id int8_ops);
-CREATE INDEX order_offer_offer_id_idx ON order_offer (offer_id int8_ops);
+CREATE INDEX order_product_offer_order_id_idx ON order_product_offer (order_id int8_ops);
+CREATE INDEX order_product_offer__order_product_id_idx ON order_product_offer (order_product_id int8_ops);
+CREATE INDEX order_product_offer_offer_id_idx ON order_product_offer (offer_id int8_ops);

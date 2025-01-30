@@ -10,9 +10,9 @@ import java.time.LocalDateTime
 
 @Serdeable
 @Entity
-@Table(name = "order_offer")
+@Table(name = "order_product_offer")
 @PersistenceContext(name = "order")
-class OrderOffer {
+class OrderProductOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_offer_seq_generator")
     @SequenceGenerator(name = "order_offer_seq_generator", sequenceName = "order_offer_id_seq", allocationSize = 1)

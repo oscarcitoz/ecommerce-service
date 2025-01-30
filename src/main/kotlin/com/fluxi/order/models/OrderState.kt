@@ -12,4 +12,10 @@ class OrderState {
     @Id
     @field:JsonProperty("name")
     var name: String = ""
+
+    companion object {
+        const val CREATED = "CREATED"
+        const val IN_PROGRESS = "IN_PROGRESS"
+        const val FINISHED = "FINISHED"
+    }
 } 
