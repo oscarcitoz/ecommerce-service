@@ -28,14 +28,6 @@ class OrderStore {
     @field:JsonProperty("email")
     var email: String = ""
 
-    @Column(name = "name", nullable = true)
-    @field:JsonProperty("name")
-    var name: String? = null
-
-    @Column(name = "last_name", nullable = true)
-    @field:JsonProperty("last_name")
-    var lastName: String? = null
-
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()

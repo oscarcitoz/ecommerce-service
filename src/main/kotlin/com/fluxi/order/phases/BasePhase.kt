@@ -1,5 +1,7 @@
 package com.fluxi.order.phases
 
+import com.fluxi.order.dtos.DirectorDTO
+
 interface BasePhase {
-   // fun apply(dto: LoadDTO): Maybe<LoadDTO>
+    fun apply(dto: DirectorDTO): DirectorDTO
 }
