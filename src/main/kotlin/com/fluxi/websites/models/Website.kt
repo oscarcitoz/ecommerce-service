@@ -28,13 +28,28 @@ class Website {
     @field:JsonProperty("type")
     var type: WebsiteType = WebsiteType.LANDING
 
+    @Type(JsonType::class)
+    @field:JsonProperty("copys")
+    var copys: Map<String, Any>? = null
+
     @field:JsonProperty("url")
     var url: String = ""
 
+    @field:JsonProperty("status")
+    var status: WebsiteStatus = WebsiteStatus.BUILDING
+
     @Type(JsonType::class)
-    @Column(name = "configuration", columnDefinition = "jsonb")
-    @field:JsonProperty("configuration")
-    var configuration: Map<String, Any>? = null
+    @Column(name = "template_design", columnDefinition = "jsonb")
+    @field:JsonProperty("template_design")
+    var template_design: Map<String, Any>? = null
+
+    @Column(name = "upsell_id")
+    @field:JsonProperty("upsell_id")
+    var upsell_id: String = ""
+
+    @Column(name = "downsell_id")
+    @field:JsonProperty("downsell_id")
+    var downsell_id: String = ""
 
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
@@ -45,6 +60,13 @@ class Website {
 
 enum class WebsiteType {
     LANDING,
-    UPELL,
-    DOWNELL
+    UPSELL,
+    DOWNSELL
+}
+
+enum class WebsiteStatus {
+    BUILDING,
+    PUBLISH,
+    PRIVATE,
+    HIDDEN,
 }

@@ -1,11 +1,14 @@
 package com.fluxi.websites.services
 
+import com.fluxi.websites.directors.WebsiteDirector
 import com.fluxi.websites.models.Website
 import jakarta.inject.Singleton
 import com.fluxi.websites.repositories.WebsiteRepository
+import com.fluxi.websites.requests.CreateWebsiteRequest
 
 @Singleton
 class WebsiteService(
+    private val websiteDirector: WebsiteDirector,
     private val websiteRepository: WebsiteRepository
 ) : WebsiteServiceInterface {
 
@@ -15,8 +18,8 @@ class WebsiteService(
     override fun findByProductId(productId: String): List<Website> =
         websiteRepository.findByProductId(productId)
 
-    override fun create(website: Website): Website {
-        return websiteRepository.save(website)
+    override fun create(createWebsiteRequest: CreateWebsiteRequest): Website {
+        return this.websiteDirector.make(createWebsiteRequest)
     }
 
 //    override fun update(id: Long, website: Website): Website {

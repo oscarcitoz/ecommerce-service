@@ -4,6 +4,7 @@ import com.fluxi.websites.requests.CreateWebsiteRequest
 import io.micronaut.http.annotation.*
 import com.fluxi.websites.services.*
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fluxi.websites.models.Website
 
 @Controller("/websites")
 class WebsiteController(
@@ -11,11 +12,11 @@ class WebsiteController(
 ) {
 
     @Post("/")
-    fun create(@Body website: CreateWebsiteRequest) {
+    fun create(@Body websiteRequest: CreateWebsiteRequest): Website {
         val objectMapper = ObjectMapper()
-        val jsonString = objectMapper.writeValueAsString(website)
+        val jsonString = objectMapper.writeValueAsString(websiteRequest)
         println(jsonString)
-        return
-//        return websiteService.create(website)
+
+        return websiteService.create(websiteRequest)
     }
 }
