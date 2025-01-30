@@ -14,8 +14,8 @@ import java.time.LocalDateTime
 @PersistenceContext(name = "order")
 class OrderProductOffer {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_offer_seq_generator")
-    @SequenceGenerator(name = "order_offer_seq_generator", sequenceName = "order_offer_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_product_offer_seq_generator")
+    @SequenceGenerator(name = "order_product_offer_seq_generator", sequenceName = "order_product_offer_id_seq", allocationSize = 1)
     @field:JsonProperty("id")
     var id: Long? = null
 

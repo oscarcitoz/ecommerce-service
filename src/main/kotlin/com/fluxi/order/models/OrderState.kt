@@ -14,9 +14,11 @@ class OrderState {
     var id: String = ""
 
     companion object {
-        const val CREATED = "CREATED"
-        const val IN_PROGRESS = "IN_PROGRESS"
-        const val FINISHED = "FINISHED"
-        const val CANCELED = "CANCELED"
+        const val CREATED = "created"
+        const val IN_PROGRESS = "in_progress"
+        const val FINISHED = "finished"
+        const val CANCELED = "canceled"
+
+        fun activeStates() = listOf(CREATED, IN_PROGRESS)
     }
 } 

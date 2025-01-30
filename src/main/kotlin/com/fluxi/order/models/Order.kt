@@ -25,6 +25,10 @@ class Order {
     @field:JsonProperty("notes")
     var notes: String? = null
 
+    @Column(name = "hash_id")
+    @field:JsonProperty("hash_id")
+    var hashId: String = ""
+
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
@@ -40,4 +44,8 @@ class Order {
     @Column(name = "total_value_with_discount", nullable = false)
     @field:JsonProperty("total_value_with_discount")
     var totalValueWithDiscount: BigDecimal = BigDecimal.ZERO
+
+    fun isActiveOrder(): Boolean {
+        return OrderState.activeStates().contains(this.state)
+    }
 }

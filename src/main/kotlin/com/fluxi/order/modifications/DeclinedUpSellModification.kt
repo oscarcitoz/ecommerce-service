@@ -12,7 +12,7 @@ import jakarta.inject.Singleton
 import java.time.LocalDateTime
 
 @Singleton
-class RejectedUpSellModification(
+class DeclinedUpSellModification(
     private val offerServiceInterface: OfferServiceInterface,
     private val orderStoreRepository: OrderStoreRepository,
     private val offerCustomerServiceInterface: OfferCustomerServiceInterface,
@@ -38,6 +38,6 @@ class RejectedUpSellModification(
     }
 
     override fun getModificationType(): String {
-        return OrderModificationType.REJECTED_UPSELL
+        return OrderModificationType.DECLINED_UP_SELL
     }
 }

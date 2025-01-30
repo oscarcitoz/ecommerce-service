@@ -16,6 +16,15 @@ class OfferCustomerService(
     private val offerCustomerRepository: OfferCustomerRepository,
     private val offerRepository: OfferRepository
 ) : OfferCustomerServiceInterface {
+    override fun disabledOfferCustomer(orderId: Long): List<OfferCustomer> {
+        val offerCustomers = this.findByOrderId(orderId).map {
+            it.enabled = false
+            it.updatedAt = LocalDateTime.now()
+            it
+        }.toList()
+
+        return this.offerCustomerRepository.updateAll(offerCustomers)
+    }
 
     override fun findById(id: Long): OfferCustomer? = offerCustomerRepository.findById(id).orElse(null)
     override fun saveAll(offerCustomers: List<OfferCustomer>): List<OfferCustomer> {
@@ -54,6 +63,7 @@ class OfferCustomerService(
                 offerCustomerExisting.apply {
                     startsAt = offerCustomer.startsAt
                     endsAt = offerCustomer.endsAt
+                    updatedAt = LocalDateTime.now()
                 }
 
                 offerCustomerRepository.update(offerCustomerExisting)

@@ -43,9 +43,17 @@ class OfferCustomer {
     @field:JsonProperty("discount_value")
     var discountValue: BigDecimal = BigDecimal.ZERO
 
+    @Column(name = "enabled", nullable = false)
+    @field:JsonProperty("enabled")
+    var enabled: Boolean = true
+
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
+
+    @Column(name = "updated_at", nullable = false)
+    @field:JsonProperty("updated_at")
+    var updatedAt: LocalDateTime = LocalDateTime.now()
 
     @JsonFormat(pattern = DATE_STRING_FORMAT)
     @Column(name = "starts_at", nullable = false)
