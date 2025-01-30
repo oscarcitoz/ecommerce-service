@@ -1,4 +1,4 @@
-package com.fluxi.order.phases
+package com.fluxi.order.phases.creations
 
 import com.fluxi.order.dtos.DirectorDTO
 import com.fluxi.order.models.OrderStore
@@ -10,7 +10,7 @@ import jakarta.inject.Singleton
 @Singleton
 class OrderStorePhase(
     private val orderStoreRepository: OrderStoreRepository
-) : BasePhase {
+) : BaseCreationPhase {
     override fun apply(dto: DirectorDTO): DirectorDTO {
         val store = dto.request.store
 

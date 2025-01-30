@@ -12,7 +12,7 @@ class StoreController(
 
     @Get("product/")
     fun findAll(@Header("owner-id") ownerId: String): List<Product> {
-        return storeService.findAll(ownerId)
+        return storeService.findAllProducts(ownerId)
     }
 
     @Get("/product/{id}")
@@ -20,7 +20,7 @@ class StoreController(
         @PathVariable(value = "id") id: String,
         @Header("owner-id") ownerId: String
     ): Product? {
-        return storeService.findById(id)
+        return storeService.findProductById(id)
     }
 
     @Post("/product")
@@ -31,7 +31,7 @@ class StoreController(
     ): Product {
         product.ownerId = ownerId
 
-        return storeService.save(product)
+        return storeService.saveProduct(product)
     }
 
     @Put("/product/{id}")
@@ -42,6 +42,6 @@ class StoreController(
     ): Product {
         product.ownerId = ownerId
 
-        return storeService.update(id, product)
+        return storeService.updateProduct(id, product)
     }
 } 

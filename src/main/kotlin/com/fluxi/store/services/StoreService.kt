@@ -13,13 +13,13 @@ import java.util.NoSuchElementException
 @Singleton
 class StoreService(private val productRepository: ProductRepository) : StoreServiceInterface {
 
-    override fun findAll(ownerId: String): List<Product> {
+    override fun findAllProducts(ownerId: String): List<Product> {
         return productRepository.findByOwnerId(ownerId)
             .filter { it.deletedAt == null }
             .toList()
     }
 
-    override fun save(product: Product): Product {
+    override fun saveProduct(product: Product): Product {
         product.apply {
             id = generateId()
         }
@@ -27,13 +27,13 @@ class StoreService(private val productRepository: ProductRepository) : StoreServ
         return productRepository.save(product)
     }
 
-    override fun findById(id: String): Product? {
+    override fun findProductById(id: String): Product {
         return productRepository.findById(id)
             .filter { it.deletedAt == null }
-            .orElse(null)
+            .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "Producto no encontrado con ID: $id") }
     }
 
-    override fun update(id: String, product: Product): Product {
+    override fun updateProduct(id: String, product: Product): Product {
         val existingProduct = productRepository.findById(id)
             .filter { it.deletedAt == null }
             .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "Producto no encontrado con ID: $id") }
