@@ -27,7 +27,6 @@ CREATE TABLE offer_customer
     id          BIGSERIAL PRIMARY KEY,
     offer_id    BIGSERIAL REFERENCES offers (id) NOT NULL,
     order_id    BIGSERIAL                        NOT NULL,
-    customer_id character varying(255)           NOT NULL,
     enabled     boolean                          NOT NULL,
     created_at  timestamp without time zone      NOT NULL,
     starts_at   timestamp without time zone      NOT NULL,
@@ -36,5 +35,4 @@ CREATE TABLE offer_customer
 
 CREATE INDEX offer_customer_offer_id_idx ON offer_customer (offer_id int8_ops);
 CREATE INDEX offer_customer_order_id_idx ON offer_customer (order_id int8_ops);
-CREATE INDEX offer_customer_customer_id_idx ON offer_customer (customer_id text_ops);
 CREATE INDEX offers_starts_at_ends_at_idx ON offer_customer (starts_at timestamp_ops, ends_at timestamp_ops);

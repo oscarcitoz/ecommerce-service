@@ -1,6 +1,8 @@
 package com.fluxi.offer.models
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fluxi.core.constants.DATE_STRING_FORMAT
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -8,6 +10,7 @@ import java.time.LocalDateTime
 @Serdeable
 @Entity
 @Table(name = "offer_customer")
+@PersistenceContext(name = "offer")
 class OfferCustomer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "offer_customer_seq_generator")
@@ -27,10 +30,6 @@ class OfferCustomer {
     @field:JsonProperty("order_id")
     var orderId: Long = 0L
 
-    @Column(name = "customer_id", nullable = false)
-    @field:JsonProperty("customer_id")
-    var customerId: String = ""
-
     @Column(name = "enabled", nullable = false)
     @field:JsonProperty("enabled")
     var enabled: Boolean = false
@@ -39,10 +38,12 @@ class OfferCustomer {
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
 
+    @JsonFormat(pattern = DATE_STRING_FORMAT)
     @Column(name = "starts_at", nullable = false)
     @field:JsonProperty("starts_at")
     var startsAt: LocalDateTime = LocalDateTime.now()
 
+    @JsonFormat(pattern = DATE_STRING_FORMAT)
     @Column(name = "ends_at", nullable = false)
     @field:JsonProperty("ends_at")
     var endsAt: LocalDateTime = LocalDateTime.now()

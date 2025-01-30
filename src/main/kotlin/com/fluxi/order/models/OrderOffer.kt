@@ -1,6 +1,8 @@
 package com.fluxi.order.models
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fluxi.core.constants.DATE_STRING_FORMAT
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
 import java.math.BigDecimal
@@ -9,6 +11,7 @@ import java.time.LocalDateTime
 @Serdeable
 @Entity
 @Table(name = "order_offer")
+@PersistenceContext(name = "order")
 class OrderOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_offer_seq_generator")
@@ -28,10 +31,12 @@ class OrderOffer {
     @field:JsonProperty("offer_id")
     var offerId: Long = 0L
 
+    @JsonFormat(pattern= DATE_STRING_FORMAT)
     @Column(name = "starts_at", nullable = false)
     @field:JsonProperty("starts_at")
     var startsAt: LocalDateTime = LocalDateTime.now()
 
+    @JsonFormat(pattern=DATE_STRING_FORMAT)
     @Column(name = "ends_at", nullable = false)
     @field:JsonProperty("ends_at")
     var endsAt: LocalDateTime = LocalDateTime.now()

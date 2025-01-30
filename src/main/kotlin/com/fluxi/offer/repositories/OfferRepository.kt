@@ -8,5 +8,4 @@ import io.micronaut.data.repository.CrudRepository
 interface OfferRepository : CrudRepository<Offer, Long> {
     fun findByOwnerId(ownerId: String): List<Offer>
     fun findByProductId(productId: String): List<Offer>
-    fun findByEnabled(enabled: Boolean): List<Offer>
 }
