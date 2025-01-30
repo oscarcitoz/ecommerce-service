@@ -7,12 +7,9 @@ import jakarta.persistence.*
 @Serdeable
 @Entity
 @Table(name = "order_states")
+@PersistenceContext(name = "order")
 class OrderState {
     @Id
     @field:JsonProperty("name")
     var name: String = ""
-    
-    @Column(name = "description", nullable = false)
-    @field:JsonProperty("description")
-    var description: String = ""
 } 

@@ -11,6 +11,7 @@ import java.time.LocalDateTime
 @Serdeable
 @Entity
 @Table(name = "order_product")
+@PersistenceContext(name = "order")
 class OrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_product_seq_generator")

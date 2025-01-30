@@ -1,7 +1,6 @@
 CREATE TABLE order_states
 (
-    name        character varying(50) PRIMARY KEY,
-    description character varying(255) NOT NULL
+    id        character varying(50) PRIMARY KEY
 );
 
 CREATE TABLE orders
@@ -12,7 +11,7 @@ CREATE TABLE orders
     type                      character varying(255)                                NOT NULL,
     created_at                timestamp without time zone                           NOT NULL,
     updated_at                timestamp without time zone                           NOT NULL,
-    state                     character varying(255) REFERENCES order_states (name) NOT NULL,
+    state                     character varying(255) REFERENCES order_states (id) NOT NULL,
     total_value_with_discount numeric(15, 2)                                        NOT NULL
 );
 
