@@ -18,6 +18,10 @@ class OrderModificationType {
 
     companion object {
         const val ADD_PRODUCT = "add_product"
-        const val REJECTED_UPSELL = "rejected_upsell"
+        const val DECLINED_UP_SELL = "declined_up_sell"
+        const val DECLINED_DOWN_SELL = "declined_down_sell"
+        const val CONFIRM_UP_SELL = "confirm_up_sell"
+        const val CONFIRM_DOWN_SELL = "confirm_down_sell"
+        const val CHANGE_STATE = "change_state"
     }
 }
