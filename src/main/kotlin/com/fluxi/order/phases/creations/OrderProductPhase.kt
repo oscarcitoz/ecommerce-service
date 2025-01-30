@@ -1,5 +1,6 @@
 package com.fluxi.order.phases.creations
 
+import com.fluxi.core.extensions.BigDecimalExtension.setDefaultScale
 import com.fluxi.order.dtos.DirectorDTO
 import com.fluxi.order.models.OrderProduct
 import com.fluxi.order.repositories.OrderProductRepository
@@ -18,7 +19,7 @@ class OrderProductPhase(private val orderProductRepository: OrderProductReposito
                 this.productId = product.id
                 this.name = product.name
                 this.images = product.images
-                this.unitPrice = product.price
+                this.unitPrice = product.price.setDefaultScale()
                 this.units = dto.request.product.units
             }
         )

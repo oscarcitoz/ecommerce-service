@@ -8,7 +8,7 @@ import com.fluxi.offer.models.Offer
 @Controller("/offer")
 class OfferController(private val offerService: OfferServiceInterface) {
     @Get("/{id}")
-    fun findById(id: Long): Offer? {
+    fun findById(@PathVariable(value = "id") id: Long): Offer? {
         return offerService.findById(id)
     }
 
@@ -21,19 +21,19 @@ class OfferController(private val offerService: OfferServiceInterface) {
     }
 
     @Put("/{id}")
-    fun update(id: Long, @Body offer: Offer, @Header("owner-id") ownerId: String): Offer? {
+    fun update(@PathVariable(value = "id") id: Long, @Body offer: Offer, @Header("owner-id") ownerId: String): Offer? {
         offer.ownerId = ownerId
 
         return offerService.update(id, offer)
     }
 
     @Get("/owner/{ownerId}")
-    fun findByOwnerId(ownerId: String): List<Offer> {
+    fun findByOwnerId(@PathVariable(value = "ownerId") ownerId: String): List<Offer> {
         return offerService.findByOwnerId(ownerId)
     }
 
     @Get("/product/{productId}")
-    fun findByProductId(productId: String): List<Offer> {
+    fun findByProductId(@PathVariable(value = "productId") productId: String): List<Offer> {
         return offerService.findByProductId(productId)
     }
 } 

@@ -6,4 +6,5 @@ import io.micronaut.data.repository.CrudRepository
 
 @Repository("order")
 interface OrderProductRepository : CrudRepository<OrderProduct, Long> {
+    fun findByOrderId(orderId: Long): List<OrderProduct>
 }

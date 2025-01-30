@@ -11,7 +11,8 @@ import jakarta.inject.Singleton
 class OrderPhase(private val orderRepository: OrderRepository): BaseCreationPhase {
     override fun apply(dto: DirectorDTO): DirectorDTO {
         dto.order = this.orderRepository.save(Order().apply {
-            this.state = OrderState.CREATED
+            //TODO CREATED FOR PAYMENT
+            this.state = OrderState.IN_PROGRESS
         })
 
         return dto

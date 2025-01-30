@@ -18,6 +18,9 @@ class OfferCustomerService(
 ) : OfferCustomerServiceInterface {
 
     override fun findById(id: Long): OfferCustomer? = offerCustomerRepository.findById(id).orElse(null)
+    override fun saveAll(offerCustomers: List<OfferCustomer>): List<OfferCustomer> {
+        return this.offerCustomerRepository.saveAll(offerCustomers).toList()
+    }
 
     override fun create(offerCustomer: OfferCustomer, ownerId: String): OfferCustomer? {
         return this.offerRepository.findById(offerCustomer.offerId).getOrNull()?.let {
@@ -49,7 +52,6 @@ class OfferCustomerService(
                 this.validateOffer(ownerId, it, offerCustomer)
 
                 offerCustomerExisting.apply {
-                    enabled = offerCustomer.enabled
                     startsAt = offerCustomer.startsAt
                     endsAt = offerCustomer.endsAt
                 }
@@ -61,4 +63,12 @@ class OfferCustomerService(
 
     override fun findByOrderId(orderId: Long): List<OfferCustomer> =
         offerCustomerRepository.findByOrderId(orderId)
+
+    override fun findByOrderIdActive(orderId: Long, productId: String): OfferCustomer? {
+        return this.findByOrderId(orderId).firstOrNull {
+            it.productId == productId && it.startsAt.isBefore(LocalDateTime.now()) && it.endsAt.isAfter(
+                LocalDateTime.now()
+            )
+        }
+    }
 } 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fluxi.core.constants.DATE_STRING_FORMAT
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Serdeable
@@ -30,9 +31,17 @@ class OfferCustomer {
     @field:JsonProperty("order_id")
     var orderId: Long = 0L
 
-    @Column(name = "enabled", nullable = false)
-    @field:JsonProperty("enabled")
-    var enabled: Boolean = false
+    @Column(name = "product_id", nullable = false)
+    @field:JsonProperty("product_id")
+    var productId: String = ""
+
+    @Column(name = "discount_type", nullable = false)
+    @field:JsonProperty("discount_type")
+    var discountType: String = ""
+
+    @Column(name = "discount_value", nullable = false)
+    @field:JsonProperty("discount_value")
+    var discountValue: BigDecimal = BigDecimal.ZERO
 
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")
