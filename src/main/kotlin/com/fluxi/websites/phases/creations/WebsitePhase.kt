@@ -8,6 +8,7 @@ import com.fluxi.websites.models.WebsiteStatus
 import com.fluxi.websites.repositories.WebsiteRepository
 import io.micronaut.core.annotation.Order
 import jakarta.inject.Singleton
+import reactor.core.publisher.Mono
 import java.math.BigDecimal
 
 @Order(4)
@@ -15,30 +16,29 @@ import java.math.BigDecimal
 class WebsitePhase(
     private val websiteRepository: WebsiteRepository
 ) : BaseCreationPhase {
-    override fun apply(dto: WebsiteDirectorDTO): WebsiteDirectorDTO {
+    override fun apply(dto: WebsiteDirectorDTO): Mono<WebsiteDirectorDTO> {
         dto.website = Website()
 
-        //TODO IMAGES
         dto.website.id = generateId()
-        dto.website.copies = dto.copys
+        dto.website.copies = dto.copies
         dto.website.name = dto.request.productName
         dto.website.price = dto.request.productPrice
         dto.website.ownerId = dto.request.userIdNotNull()
-        dto.website.images = listOf()
+        dto.website.images = dto.imagesProduct
         dto.website.productId = dto.mainProductId
         dto.website.upsellProductId = dto.upsellProductId
         dto.website.upsellProductPrice = dto.request.upSell.price
-        dto.website.upsellProductImage = ""
+        dto.website.upsellProductImage = dto.upsellImage
         dto.website.downSellProductId = dto.downsellProductId
         dto.website.downSellProductPrice = dto.request.downSell?.price
-        dto.website.downSellProductImage = ""
+        dto.website.downSellProductImage = dto.downSellImage
         dto.website.downSellProductPriceWithDiscount = this.calculateDiscount(dto)
         dto.website.status = WebsiteStatus.BUILDING
         dto.website.templateDesign = dto.request.templateDesign
 
         websiteRepository.save(dto.website)
 
-        return dto
+        return Mono.just(dto)
     }
 
     private fun calculateDiscount(dto: WebsiteDirectorDTO): BigDecimal? {

@@ -18,6 +18,7 @@ import com.fluxi.websites.requests.CreateWebsiteRequest
 import com.fluxi.websites.requests.ModificationRequest
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.exceptions.HttpStatusException
+import reactor.core.publisher.Mono
 
 @Singleton
 class WebsiteService(
@@ -32,7 +33,7 @@ class WebsiteService(
     override fun findByProductId(productId: String): List<Website> =
         websiteRepository.findByProductId(productId)
 
-    override fun create(createWebsiteRequest: CreateWebsiteRequest): Website {
+    override fun create(createWebsiteRequest: CreateWebsiteRequest): Mono<Website> {
         return this.websiteDirector.make(createWebsiteRequest)
     }
 

@@ -12,7 +12,7 @@ class CreateWebsiteRequest {
     var productName: String = ""
     var productDescription: String = ""
     var productWarranty: String = ""
-    var productImages: Array<String> = arrayOf()
+    var productImages: List<String> = listOf()
     var productPrice: BigDecimal = BigDecimal.ZERO
     var productDiscountPrice: Number? = null
     var paymentMethod: PaymentMethod = PaymentMethod()
