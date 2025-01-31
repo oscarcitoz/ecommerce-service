@@ -43,13 +43,6 @@ class WebsiteService(
     override fun findWebSite(ownerId: String, websiteId: String): Website {
         val website = this.websiteRepository.findById(websiteId)
             .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "NOT EXITS WEBSITE") }
-        website.upsellId?.let {
-            website.upsellWebsite = this.websiteRepository.findById(it).get()
-        }
-
-        website.downsellId?.let {
-            website.downsellWebsite = this.websiteRepository.findById(it).get()
-        }
 
         return website
     }
@@ -86,7 +79,7 @@ class WebsiteService(
     ): OrderModification {
         val website = this.websiteRepository.findById(websiteId)
             .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "NOT EXITS WEBSITE") }
-        val typeModification = this.getTypeModification(website.type, modificationRequest)
+        val typeModification = this.getTypeModification(modificationRequest.type, modificationRequest)
 
         return this.orderServiceInterface.orderModificationHash(OrderModification().apply {
             this.orderModificationType = typeModification

@@ -34,10 +34,6 @@ class Website {
     @field:JsonProperty("name")
     var name: String = ""
 
-    @Column(name = "type")
-    @field:JsonProperty("type")
-    var type: String = WebsiteType.LANDING
-
     @Type(JsonType::class)
     @Column(name = "copies")
     @field:JsonProperty("copies")
@@ -61,21 +57,33 @@ class Website {
     @field:JsonProperty("template_design")
     var templateDesign: Map<String, Any>? = null
 
-    @Column(name = "upsell_id")
-    @field:JsonProperty("upsell_id")
-    var upsellId: String? = null
+    @Column(name = "upsell_product_id")
+    @field:JsonProperty("upsell_product_id")
+    var upsellProductId: String? = null
 
-    @Transient
-    @field:JsonProperty("upsell_website")
-    var upsellWebsite: Website? = null
+    @Column(name = "upsell_product_price")
+    @field:JsonProperty("upsell_product_price")
+    var upsellProductPrice: BigDecimal? = null
 
-    @Column(name = "downsell_id")
-    @field:JsonProperty("downsell_id")
-    var downsellId: String? = null
+    @Column(name = "upsell_product_image")
+    @field:JsonProperty("upsell_product_image")
+    var upsellProductImage: String? = null
 
-    @Transient
-    @field:JsonProperty("downsell_website")
-    var downsellWebsite: Website? = null
+    @Column(name = "down_sell_product_id")
+    @field:JsonProperty("down_sell_product_id")
+    var downSellProductId: String? = null
+
+    @Column(name = "down_sell_product_price")
+    @field:JsonProperty("down_sell_product_price")
+    var downSellProductPrice: BigDecimal? = null
+
+    @Column(name = "down_sell_product_price_with_discount")
+    @field:JsonProperty("down_sell_product_price_with_discount")
+    var downSellProductPriceWithDiscount: BigDecimal? = null
+
+    @Column(name = "down_sell_product_image")
+    @field:JsonProperty("down_sell_product_image")
+    var downSellProductImage: String? = null
 
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
@@ -84,19 +92,18 @@ class Website {
     var updatedAt: LocalDateTime = LocalDateTime.now()
 }
 
-class WebsiteType {
-    companion object {
-        val LANDING = "LANDING"
-        val UPSELL = "UPSELL"
-        val DOWNSELL = "DOWNSELL"
-    }
-}
-
 class WebsiteStatus {
     companion object {
         val BUILDING = "BUILDING"
         val PUBLISH = "PUBLISH"
         val PRIVATE = "PRIVATE"
         val HIDDEN = "HIDDEN"
+    }
+}
+
+class WebsiteType {
+    companion object {
+        val UPSELL = "upsell"
+        val DOWNSELL = "downsell"
     }
 }

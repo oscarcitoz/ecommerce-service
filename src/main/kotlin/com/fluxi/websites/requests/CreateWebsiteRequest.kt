@@ -40,8 +40,9 @@ class UpSell {
 @Introspected
 class DownSell {
     var name: String = ""
+    //TODO CALCULATE PRICE_WITH_DISCOUNT
     var price: BigDecimal = BigDecimal.ZERO
-    var porcentage: Int = 0
+    var percentage: Int = 0
     var image: String = ""
 }
 
