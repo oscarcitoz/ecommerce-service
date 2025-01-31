@@ -12,5 +12,7 @@ class WebsiteDirectorDTO {
     lateinit var downsellProductId: String
 
     lateinit var website: Website
-
+    lateinit var imagesProduct: List<String>
+    lateinit var upsellImage: String
+    lateinit var downSellImage: String
 }

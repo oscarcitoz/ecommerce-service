@@ -9,13 +9,14 @@ import com.fluxi.order.models.OrderModification
 import com.fluxi.websites.models.Website
 import com.fluxi.websites.requests.CreateOrderWebsiteRequest
 import com.fluxi.websites.requests.ModificationRequest
+import reactor.core.publisher.Mono
 
 @Controller("/websites")
 class WebsiteController(
     private val websiteService: WebsiteServiceInterface
 ) {
     @Post("/")
-    fun create(@Body websiteRequest: CreateWebsiteRequest): Website {
+    fun create(@Body websiteRequest: CreateWebsiteRequest): Mono<Website> {
         return websiteService.create(websiteRequest)
     }
 

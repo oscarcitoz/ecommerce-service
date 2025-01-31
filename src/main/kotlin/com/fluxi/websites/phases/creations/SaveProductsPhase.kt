@@ -8,20 +8,21 @@ import com.fluxi.store.services.StoreService
 import com.fluxi.websites.dtos.WebsiteDirectorDTO
 import io.micronaut.core.annotation.Order
 import jakarta.inject.Singleton
+import reactor.core.publisher.Mono
 import java.math.BigDecimal
 
-@Order(2)
+@Order(3)
 @Singleton
 class SaveProductsPhase(
     private val storeService: StoreService,
     private val offerService: OfferService
 ) : BaseCreationPhase {
-    override fun apply(dto: WebsiteDirectorDTO): WebsiteDirectorDTO {
+    override fun apply(dto: WebsiteDirectorDTO): Mono<WebsiteDirectorDTO> {
         val productSaved = this.createProduct(
             dto,
             dto.request.productName,
             dto.request.productDescription,
-            listOf(),
+            dto.imagesProduct,
             dto.request.productPrice
         )
 
@@ -29,7 +30,7 @@ class SaveProductsPhase(
             dto,
             dto.request.upSell.name,
             dto.request.upSell.name,
-            listOf("http:...1", "http:...2"),
+            listOf(dto.upsellImage),
             dto.request.upSell.price
         )
 
@@ -41,7 +42,7 @@ class SaveProductsPhase(
         dto.upsellProductId = upsellProductSaved.id
         dto.downsellProductId = upsellProductSaved.id
 
-        return dto
+        return Mono.just(dto)
     }
 
     private fun createProduct(
