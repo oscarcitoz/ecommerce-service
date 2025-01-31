@@ -35,7 +35,7 @@ open class OrderService(
 
         val order = this.orderRepository.findById(orderModification.orderId)
             .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "Order Not Exists") }
-        if (!order.isActiveOrder()) throw HttpStatusException(HttpStatus.BAD_REQUEST, "Order Not Active")
+        if (!order.activeOrder()) throw HttpStatusException(HttpStatus.BAD_REQUEST, "Order Not Active")
 
         return this.orderModificationRepository.save(orderModificationClass.makeModification(orderModification))
     }
