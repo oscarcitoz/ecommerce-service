@@ -7,15 +7,10 @@ import com.fluxi.websites.requests.CreateWebsiteRequest
 import jakarta.inject.Singleton
 import io.micronaut.core.annotation.Order
 import reactor.core.publisher.Mono
-import java.net.URL
-import java.net.HttpURLConnection
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
 
 @Order(1)
 @Singleton
-class CopysWebsitePhase(
+class CopiesWebsitePhase(
     private val copyClient: CopyClient
 ) : BaseCreationPhase {
 
@@ -24,11 +19,17 @@ class CopysWebsitePhase(
             this.companyDescription = generatePrompt(dto.request)
         }
 
+        dto.copies = mapOf()
+        return Mono.just(dto)
+
+        /*
         return this.copyClient.generateCopies(request).map {
             dto.copies = it
 
             dto
         }
+
+         */
     }
 
     private fun generatePrompt(dtoRequest: CreateWebsiteRequest): String {
