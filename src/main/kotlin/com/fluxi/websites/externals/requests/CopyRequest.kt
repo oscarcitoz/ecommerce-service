@@ -6,5 +6,7 @@ import io.micronaut.serde.annotation.Serdeable
 @Introspected
 @Serdeable
 class CopyRequest {
-    var companyDescription: String = ""
+    var userId: String = ""
+    var prompt: String = ""
+    var productName: String = ""
 }

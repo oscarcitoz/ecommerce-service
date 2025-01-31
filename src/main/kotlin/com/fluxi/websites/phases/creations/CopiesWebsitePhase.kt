@@ -16,20 +16,16 @@ class CopiesWebsitePhase(
 
     override fun apply(dto: WebsiteDirectorDTO): Mono<WebsiteDirectorDTO> {
         val request = CopyRequest().apply {
-            this.companyDescription = generatePrompt(dto.request)
+            this.userId = dto.request.userId?: dto.request.email ?: ""
+            this.prompt = generatePrompt(dto.request)
+            this.productName = dto.request.productName
         }
 
-        dto.copies = mapOf()
-        return Mono.just(dto)
-
-        /*
         return this.copyClient.generateCopies(request).map {
-            dto.copies = it
+            dto.copies = it.data.copys.copys
 
             dto
         }
-
-         */
     }
 
     private fun generatePrompt(dtoRequest: CreateWebsiteRequest): String {
