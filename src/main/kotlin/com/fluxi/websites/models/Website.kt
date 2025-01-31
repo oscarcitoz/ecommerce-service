@@ -5,7 +5,9 @@ import io.hypersistence.utils.hibernate.type.json.JsonType
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
 import org.hibernate.annotations.Type
+import java.math.BigDecimal
 import java.time.LocalDateTime
+import kotlin.jvm.Transient
 
 @Serdeable
 @Entity
@@ -24,13 +26,17 @@ class Website {
     @field:JsonProperty("product_id")
     var productId: String = ""
 
+    @Column(name = "price", nullable = false)
+    @field:JsonProperty("price")
+    var price: BigDecimal = BigDecimal.ZERO
+
     @Column(name = "name")
     @field:JsonProperty("name")
     var name: String = ""
 
     @Column(name = "type")
     @field:JsonProperty("type")
-    var type: WebsiteType = WebsiteType.LANDING
+    var type: String = WebsiteType.LANDING
 
     @Type(JsonType::class)
     @Column(name = "copies")
@@ -48,20 +54,28 @@ class Website {
 
     @field:JsonProperty("status")
     @Column(name = "status")
-    var status: WebsiteStatus = WebsiteStatus.BUILDING
+    var status: String = WebsiteStatus.BUILDING
 
     @Type(JsonType::class)
     @Column(name = "template_design", columnDefinition = "jsonb")
     @field:JsonProperty("template_design")
-    var template_design: Map<String, Any>? = null
+    var templateDesign: Map<String, Any>? = null
 
     @Column(name = "upsell_id")
     @field:JsonProperty("upsell_id")
-    var upsell_id: String = ""
+    var upsellId: String? = null
+
+    @Transient
+    @field:JsonProperty("upsell_website")
+    var upsellWebsite: Website? = null
 
     @Column(name = "downsell_id")
     @field:JsonProperty("downsell_id")
-    var downsell_id: String = ""
+    var downsellId: String? = null
+
+    @Transient
+    @field:JsonProperty("downsell_website")
+    var downsellWebsite: Website? = null
 
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
@@ -70,15 +84,19 @@ class Website {
     var updatedAt: LocalDateTime = LocalDateTime.now()
 }
 
-enum class WebsiteType {
-    LANDING,
-    UPSELL,
-    DOWNSELL
+class WebsiteType {
+    companion object {
+        val LANDING = "LANDING"
+        val UPSELL = "UPSELL"
+        val DOWNSELL = "DOWNSELL"
+    }
 }
 
-enum class WebsiteStatus {
-    BUILDING,
-    PUBLISH,
-    PRIVATE,
-    HIDDEN,
+class WebsiteStatus {
+    companion object {
+        val BUILDING = "BUILDING"
+        val PUBLISH = "PUBLISH"
+        val PRIVATE = "PRIVATE"
+        val HIDDEN = "HIDDEN"
+    }
 }

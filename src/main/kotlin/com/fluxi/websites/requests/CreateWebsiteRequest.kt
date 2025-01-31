@@ -1,7 +1,10 @@
 package com.fluxi.websites.requests
 
 import io.micronaut.core.annotation.Introspected
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.exceptions.HttpStatusException
 import io.micronaut.serde.annotation.Serdeable
+import java.math.BigDecimal
 
 @Serdeable
 @Introspected
@@ -10,22 +13,26 @@ class CreateWebsiteRequest {
     var productDescription: String = ""
     var productWarranty: String = ""
     var productImages: Array<String> = arrayOf()
-    var productPrice: Number? = null
+    var productPrice: BigDecimal = BigDecimal.ZERO
     var productDiscountPrice: Number? = null
     var paymentMethod: PaymentMethod = PaymentMethod()
     var upSell: UpSell = UpSell()
-    var downSell: DownSell = DownSell()
+    var downSell: DownSell? = null
     var isFreeShipping: Boolean = false
-    var templateDesign: Map<String, Any?>? = null
+    var templateDesign: Map<String, Any>? = null
     var userId: String? = null
     var email: String? = null
+
+    fun userIdNotNull(): String {
+        return this.userId ?: this.email ?: throw HttpStatusException(HttpStatus.BAD_REQUEST, "NOT USER ID WITHOUT EMAIL")
+    }
 }
 
 @Serdeable
 @Introspected
 class UpSell {
     var name: String = ""
-    var price: Number = 0
+    var price: BigDecimal = BigDecimal.ZERO
     var image: String = ""
 }
 
@@ -33,8 +40,8 @@ class UpSell {
 @Introspected
 class DownSell {
     var name: String = ""
-    var price: Number? = null
-    var porcentage: Number = 0
+    var price: BigDecimal = BigDecimal.ZERO
+    var porcentage: Int = 0
     var image: String = ""
 }
 

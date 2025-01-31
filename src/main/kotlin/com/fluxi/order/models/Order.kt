@@ -5,6 +5,7 @@ import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import kotlin.jvm.Transient
 
 @PersistenceContext(name = "order")
 @Serdeable
@@ -44,8 +45,8 @@ class Order {
     @Column(name = "total_value_with_discount", nullable = false)
     @field:JsonProperty("total_value_with_discount")
     var totalValueWithDiscount: BigDecimal = BigDecimal.ZERO
-
-    fun isActiveOrder(): Boolean {
+    
+    fun activeOrder(): Boolean {
         return OrderState.activeStates().contains(this.state)
     }
 }

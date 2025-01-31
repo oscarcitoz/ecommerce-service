@@ -15,18 +15,27 @@ import java.math.BigDecimal
 class SaveProductsPhase(
     private val storeService: StoreService,
     private val offerService: OfferService
-): BaseCreationPhase {
+) : BaseCreationPhase {
     override fun apply(dto: WebsiteDirectorDTO): WebsiteDirectorDTO {
+        val productSaved = this.createProduct(
+            dto,
+            dto.request.productName,
+            dto.request.productDescription,
+            listOf(),
+            dto.request.productPrice
+        )
 
-        val productSaved = createMainProduct(dto)
+        val upsellProductSaved = this.createProduct(
+            dto,
+            dto.request.upSell.name,
+            dto.request.upSell.name,
+            listOf("http:...1", "http:...2"),
+            dto.request.upSell.price
+        )
 
-        val upsellProductSaved = createUpsellProduct(dto)
-
-        val downsellOffer = createUpsellOffer(upsellProductSaved.id, dto)
-
-        println(productSaved)
-        println(upsellProductSaved)
-        println(downsellOffer)
+        if (dto.request.downSell != null) {
+            val downsellOffer = createUpsellOffer(upsellProductSaved.id, dto)
+        }
 
         dto.mainProductId = productSaved.id
         dto.upsellProductId = upsellProductSaved.id
@@ -35,53 +44,37 @@ class SaveProductsPhase(
         return dto
     }
 
-    private fun createMainProduct(dto: WebsiteDirectorDTO): Product {
-        val mainProduct = Product().apply {
-            ownerId = dto.request.userId ?: ""
-            name = dto.request.productName
-            price = BigDecimal(dto.request.productPrice?.toDouble() ?: 0.0)
-            available = true
-            images = listOf("http:...1", "http:...2")
-            description = dto.request.productDescription
-            category = null
+    private fun createProduct(
+        dto: WebsiteDirectorDTO,
+        productName: String,
+        description: String,
+        images: List<String>,
+        price: BigDecimal,
+    ): Product {
+        val product = Product().apply {
+            this.ownerId = dto.request.userIdNotNull()
+            this.name = productName
+            this.price = price
+            this.available = true
+            this.images = images
+            this.description = description
+            this.category = null
         }
 
-        println("Producto creado: $mainProduct")
-
-        return storeService.saveProduct(mainProduct)
-    }
-
-    private fun createUpsellProduct(dto: WebsiteDirectorDTO): Product {
-        val upsellProduct = Product().apply {
-            ownerId = dto.request.userId ?: ""
-            name = dto.request.upSell.name
-            price = BigDecimal(dto.request.upSell.price?.toDouble() ?: 0.0)
-            available = true
-            images = listOf("http:...1", "http:...2")
-            description = dto.request.upSell.name
-            category = null
-        }
-
-        println("Producto Upsell creado: $upsellProduct")
-
-        return storeService.saveProduct(upsellProduct)
+        return storeService.saveProduct(product)
     }
 
     private fun createUpsellOffer(productIdUpsell: String, dto: WebsiteDirectorDTO): Offer {
         val upsellProduct = Offer().apply {
-            ownerId = dto.request.userId ?: ""
+            ownerId = dto.request.userIdNotNull()
             name = dto.request.upSell.name
             description = dto.request.upSell.name
             enabled = true
             discountType = DiscountType.PERCENTAGE
-            discountValue = (dto.request.downSell.price?.toDouble() ?: 0.0).toBigDecimal()
+            discountValue = (dto.request.downSell!!.price)
             productId = productIdUpsell
         }
 
-        println("Producto Upsell creado: $upsellProduct")
-
         return offerService.create(upsellProduct)
     }
-
-
 }

@@ -18,7 +18,6 @@ open class WebsiteDirector(
         val websiteDTO = this.initDTO(createWebsiteRequest)
         this.run(websiteDTO, this.creationPhases)
 
-        websiteDTO.website = Website()
         return websiteDTO.website
     }
 

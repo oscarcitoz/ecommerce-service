@@ -9,5 +9,4 @@ import reactor.core.publisher.Flux
 interface WebsiteRepository : CrudRepository<Website, String> {
     fun findByProductId(productId: String): List<Website>
     fun findByOwnerId(ownerId: String): List<Website>
-//    fun create(website: Website) : Website
 }
