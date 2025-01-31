@@ -16,26 +16,38 @@ class Website {
     @field:JsonProperty("id")
     var id: String = ""
 
+    @Column(name = "owner_id")
     @field:JsonProperty("owner_id")
     var ownerId: String = ""
 
+    @Column(name = "product_id")
     @field:JsonProperty("product_id")
     var productId: String = ""
 
+    @Column(name = "name")
     @field:JsonProperty("name")
     var name: String = ""
 
+    @Column(name = "type")
     @field:JsonProperty("type")
     var type: WebsiteType = WebsiteType.LANDING
 
     @Type(JsonType::class)
-    @field:JsonProperty("copys")
-    var copys: Map<String, Any>? = null
+    @Column(name = "copies")
+    @field:JsonProperty("copies")
+    var copies: Map<String, Any>? = null
+
+    @Type(JsonType::class)
+    @Column(name = "images")
+    @field:JsonProperty("images")
+    var images: List<String> = listOf()
 
     @field:JsonProperty("url")
+    @Column(name = "url")
     var url: String = ""
 
     @field:JsonProperty("status")
+    @Column(name = "status")
     var status: WebsiteStatus = WebsiteStatus.BUILDING
 
     @Type(JsonType::class)

@@ -1,6 +1,6 @@
 package com.fluxi.websites.directors
 
-import com.fluxi.websites.dtos.CreateWebsiteDTO
+import com.fluxi.websites.dtos.WebsiteDirectorDTO
 import com.fluxi.websites.models.Website
 import com.fluxi.websites.phases.BasePhase
 import com.fluxi.websites.phases.creations.BaseCreationPhase
@@ -18,16 +18,17 @@ open class WebsiteDirector(
         val websiteDTO = this.initDTO(createWebsiteRequest)
         this.run(websiteDTO, this.creationPhases)
 
+        websiteDTO.website = Website()
         return websiteDTO.website
     }
 
-    private fun initDTO(createWebsiteRequest: CreateWebsiteRequest): CreateWebsiteDTO {
-        return CreateWebsiteDTO().apply {
+    private fun initDTO(createWebsiteRequest: CreateWebsiteRequest): WebsiteDirectorDTO {
+        return WebsiteDirectorDTO().apply {
             this.request = createWebsiteRequest
         }
     }
 
-    private fun run(dto: CreateWebsiteDTO, phases: List<BasePhase>) {
+    private fun run(dto: WebsiteDirectorDTO, phases: List<BasePhase>) {
         phases.forEach {
             it.apply(dto)
         }

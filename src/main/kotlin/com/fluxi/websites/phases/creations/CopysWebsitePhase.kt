@@ -1,6 +1,6 @@
 package com.fluxi.websites.phases.creations
 
-import com.fluxi.websites.dtos.CreateWebsiteDTO
+import com.fluxi.websites.dtos.WebsiteDirectorDTO
 import com.fluxi.websites.requests.CreateWebsiteRequest
 import jakarta.inject.Singleton
 import io.micronaut.core.annotation.Order
@@ -16,17 +16,16 @@ class CopysWebsitePhase(
     private val baseUrl: String = "https://develop.api.fluxi.com.co/api/v1/openai-integration/generate-copys",
 ) : BaseCreationPhase {
 
-
-    override fun apply(dto: CreateWebsiteDTO): CreateWebsiteDTO {
+    override fun apply(dto: WebsiteDirectorDTO): WebsiteDirectorDTO {
         val prompt = generatePrompt(dto.request)
 //        val copys = generateCopys(prompt)
         val copys: Map<String, Any> = mapOf("prompt" to prompt)
 
         println(copys)
 
-        dto.website.copys = copys
 
-        // Aquí puedes utilizar el resultado de `copys` para modificar el DTO si es necesario
+        dto.copys = copys
+
         return dto
     }
 
