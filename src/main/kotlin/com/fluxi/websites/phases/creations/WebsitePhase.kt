@@ -19,9 +19,8 @@ class WebsitePhase(
     override fun apply(dto: WebsiteDirectorDTO): Mono<WebsiteDirectorDTO> {
         dto.website = Website()
 
-        //TODO IMAGES
         dto.website.id = generateId()
-        dto.website.copies = dto.copys
+        dto.website.copies = dto.copies
         dto.website.name = dto.request.productName
         dto.website.price = dto.request.productPrice
         dto.website.ownerId = dto.request.userIdNotNull()

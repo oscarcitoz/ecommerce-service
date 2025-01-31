@@ -37,7 +37,7 @@ class Website {
     @Type(JsonType::class)
     @Column(name = "copies")
     @field:JsonProperty("copies")
-    var copies: Map<String, Any>? = null
+    var copies: Map<String, Any?>? = null
 
     @Type(JsonType::class)
     @Column(name = "images")

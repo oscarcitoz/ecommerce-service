@@ -5,7 +5,7 @@ import com.fluxi.websites.requests.CreateWebsiteRequest
 
 class WebsiteDirectorDTO {
     lateinit var request: CreateWebsiteRequest
-    lateinit var copys: Map<String, Any>
+    lateinit var copies: Map<String, Any?>
 
     lateinit var mainProductId: String
     lateinit var upsellProductId: String
