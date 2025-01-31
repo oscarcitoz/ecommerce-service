@@ -8,4 +8,5 @@ import io.micronaut.serde.annotation.Serdeable
 class ModificationRequest {
     var units: Int? = 1
     var confirm: Boolean = true
+    var type: String = ""
 }
