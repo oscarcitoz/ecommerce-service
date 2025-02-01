@@ -5,11 +5,9 @@ import io.hypersistence.utils.hibernate.type.json.JsonType
 import io.micronaut.data.annotation.Where
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
-import org.hibernate.annotations.Filter
 import org.hibernate.annotations.Type
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import kotlin.jvm.Transient
 
 @Serdeable
 @Entity
@@ -37,14 +35,14 @@ class Website {
     @field:JsonProperty("name")
     var name: String = ""
 
-    @Type(JsonType::class)
-    @Column(name = "copies")
+    @field:Column(name = "copies")
     @field:JsonProperty("copies")
+    @field:Type(JsonType::class)
     var copies: Map<String, Any?>? = null
 
-    @Type(JsonType::class)
-    @Column(name = "images")
+    @field:Column(name = "images")
     @field:JsonProperty("images")
+    @field:Type(JsonType::class)
     var images: List<String> = listOf()
 
     @field:JsonProperty("url")
@@ -55,9 +53,9 @@ class Website {
     @Column(name = "status")
     var status: String = WebsiteStatus.BUILDING
 
-    @Type(JsonType::class)
-    @Column(name = "template_design", columnDefinition = "jsonb")
+    @field:Column(name = "template_design", columnDefinition = "jsonb")
     @field:JsonProperty("template_design")
+    @field:Type(JsonType::class)
     var templateDesign: Map<String, Any>? = null
 
     @Column(name = "upsell_product_id")
