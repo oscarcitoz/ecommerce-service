@@ -22,7 +22,7 @@ class CopiesWebsitePhase(
         }
 
         return this.copyClient.generateCopies(request).retry(1).map {
-            dto.copies = it.data.copys.copys
+            dto.copies = it.data.copys
 
             dto
         }
