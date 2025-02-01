@@ -10,12 +10,16 @@ import com.fluxi.websites.models.Website
 import com.fluxi.websites.requests.CreateOrderWebsiteRequest
 import com.fluxi.websites.requests.ModificationRequest
 import com.fluxi.websites.requests.UpdateWebsiteRequest
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ExecuteOn
 import reactor.core.publisher.Mono
 
 @Controller("/websites")
 class WebsiteController(
     private val websiteService: WebsiteServiceInterface
 ) {
+
+    @ExecuteOn(TaskExecutors.IO)
     @Post("/")
     fun create(@Body websiteRequest: CreateWebsiteRequest): Mono<Website> {
         return websiteService.create(websiteRequest)
