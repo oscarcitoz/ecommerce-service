@@ -45,6 +45,14 @@ class WebsiteController(
         return websiteService.updateWebsite(ownerId, websiteId, updateWebsiteRequest)
     }
 
+    @Delete("/{websiteId}")
+    fun delete(
+        @PathVariable(value = "websiteId") websiteId: String,
+        @Header("owner-id") ownerId: String,
+    ): Website {
+        return websiteService.delete(ownerId, websiteId)
+    }
+
     @Post("/{websiteId}/create-order")
     fun createOrder(
         @Header("X-Forwarded-For") ipClient: String,
