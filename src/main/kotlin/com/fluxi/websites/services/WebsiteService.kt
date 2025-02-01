@@ -1,5 +1,6 @@
 package com.fluxi.websites.services
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fluxi.order.models.Order
 import com.fluxi.order.models.OrderModification
 import com.fluxi.order.models.OrderModificationType
@@ -103,8 +104,9 @@ class WebsiteService(
         website.url = updateWebsiteRequest.url ?: website.url
         website.status = updateWebsiteRequest.status ?: website.status
         website.updatedAt = LocalDateTime.now()
+        this.websiteRepository.updateWebsiteStatusUrlAndUpdatedAt(websiteId, website.status, website.url, website.updatedAt)
 
-        return this.websiteRepository.update(website)
+        return website
     }
 
     override fun delete(ownerId: String, websiteId: String): Website {
@@ -114,8 +116,9 @@ class WebsiteService(
 
         website.updatedAt = LocalDateTime.now()
         website.deletedAt = LocalDateTime.now()
+        this.websiteRepository.updateWebsiteDeletedAtAndUpdatedAt(websiteId, website.updatedAt, website.deletedAt!!)
 
-        return this.websiteRepository.update(website)
+        return website
     }
 
     private fun getTypeModification(websiteType: String, modificationRequest: ModificationRequest): String {
