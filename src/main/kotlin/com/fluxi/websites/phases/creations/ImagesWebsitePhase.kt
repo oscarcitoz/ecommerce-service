@@ -60,6 +60,6 @@ class ImagesWebsitePhase(
             this.folder = folder
         }
 
-        return this.imageS3Client.upload(request)
+        return this.imageS3Client.upload(request).retry(1)
     }
 }

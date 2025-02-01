@@ -21,7 +21,7 @@ class CopiesWebsitePhase(
             this.productName = dto.request.productName
         }
 
-        return this.copyClient.generateCopies(request).map {
+        return this.copyClient.generateCopies(request).retry(1).map {
             dto.copies = it.data.copys.copys
 
             dto
