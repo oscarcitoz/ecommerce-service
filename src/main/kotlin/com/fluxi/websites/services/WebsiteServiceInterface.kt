@@ -18,5 +18,6 @@ interface WebsiteServiceInterface {
     fun createOrder(websiteId: String, createOrderWebsiteRequest: CreateOrderWebsiteRequest, ipClient: String): Order
     fun modification(websiteId: String, hashOrderId: String, modificationRequest: ModificationRequest): OrderModification
     fun updateWebsite(ownerId: String, websiteId: String, updateWebsiteRequest: UpdateWebsiteRequest): Website
+    fun delete(ownerId: String, websiteId: String): Website
 }
 

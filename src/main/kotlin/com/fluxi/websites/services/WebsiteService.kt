@@ -107,6 +107,17 @@ class WebsiteService(
         return this.websiteRepository.update(website)
     }
 
+    override fun delete(ownerId: String, websiteId: String): Website {
+        val website = this.websiteRepository.findById(websiteId)
+            .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "NOT EXITS WEBSITE") }
+        if (website.ownerId != ownerId) throw HttpStatusException(HttpStatus.BAD_REQUEST, "The website is not your")
+
+        website.updatedAt = LocalDateTime.now()
+        website.deletedAt = LocalDateTime.now()
+
+        return this.websiteRepository.update(website)
+    }
+
     private fun getTypeModification(websiteType: String, modificationRequest: ModificationRequest): String {
         return if (websiteType == UPSELL && modificationRequest.confirm) {
             OrderModificationType.CONFIRM_UP_SELL

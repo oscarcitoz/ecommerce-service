@@ -2,8 +2,10 @@ package com.fluxi.websites.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.hypersistence.utils.hibernate.type.json.JsonType
+import io.micronaut.data.annotation.Where
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
+import org.hibernate.annotations.Filter
 import org.hibernate.annotations.Type
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -13,6 +15,7 @@ import kotlin.jvm.Transient
 @Entity
 @Table(name = "website")
 @PersistenceContext(name = "website")
+@Where(value = "deletedAt IS NULL")
 class Website {
     @Id
     @field:JsonProperty("id")
@@ -90,6 +93,10 @@ class Website {
 
     @field:JsonProperty("updated_at")
     var updatedAt: LocalDateTime = LocalDateTime.now()
+
+    @Column(name = "deleted_at")
+    @field:JsonProperty("deleted_at")
+    var deletedAt: LocalDateTime? = null
 }
 
 class WebsiteStatus {
