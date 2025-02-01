@@ -12,11 +12,5 @@ class CopyResponse {
 @Serdeable
 @Introspected
 class Data {
-    var copys: Copy = Copy()
-}
-
-@Serdeable
-@Introspected
-class Copy {
     var copys: Map<String, Any?> = mapOf()
 }
