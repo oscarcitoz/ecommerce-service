@@ -46,7 +46,7 @@ class ImagesWebsitePhase(
     }
 
     private fun uploadImage(image: String, guest: Boolean, userId: String, prefix: String): Mono<ImageS3Response> {
-        val id = generateId() + ".png"
+        val id = generateId()
 
         val folder = if (guest) {
             "website/guest/$userId/$prefix"
