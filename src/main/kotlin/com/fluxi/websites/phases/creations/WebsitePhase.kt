@@ -27,7 +27,7 @@ class WebsitePhase(
         dto.website.images = dto.imagesProduct
         dto.website.productId = dto.mainProductId
         dto.website.upsellProductId = dto.upsellProductId
-        dto.website.upsellProductPrice = dto.request.upSell.price
+        dto.website.upsellProductPrice = dto.request.upSell?.price
         dto.website.upsellProductImage = dto.upsellImage
         dto.website.downSellProductId = dto.downsellProductId
         dto.website.downSellProductPrice = dto.request.downSell?.price

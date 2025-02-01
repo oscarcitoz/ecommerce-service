@@ -16,7 +16,7 @@ class CreateWebsiteRequest {
     var productPrice: BigDecimal = BigDecimal.ZERO
     var productDiscountPrice: Number? = null
     var paymentMethod: PaymentMethod = PaymentMethod()
-    var upSell: UpSell = UpSell()
+    var upSell: UpSell? = null
     var downSell: DownSell? = null
     var isFreeShipping: Boolean = false
     var templateDesign: Map<String, Any>? = null

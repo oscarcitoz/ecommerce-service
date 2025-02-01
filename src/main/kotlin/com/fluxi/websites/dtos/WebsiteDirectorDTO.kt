@@ -8,11 +8,11 @@ class WebsiteDirectorDTO {
     lateinit var copies: Map<String, Any?>
 
     lateinit var mainProductId: String
-    lateinit var upsellProductId: String
-    lateinit var downsellProductId: String
+    var upsellProductId: String? = null
+    var downsellProductId: String? = null
 
     lateinit var website: Website
     lateinit var imagesProduct: List<String>
-    lateinit var upsellImage: String
-    lateinit var downSellImage: String
+    var upsellImage: String? = null
+    var downSellImage: String? = null
 }
