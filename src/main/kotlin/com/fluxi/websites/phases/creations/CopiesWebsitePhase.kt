@@ -21,16 +21,11 @@ class CopiesWebsitePhase(
             this.productName = dto.request.productName
         }
 
-         dto.copies = mapOf<String, Any>()
-        return Mono.just(dto)
-/*
         return this.copyClient.generateCopies(request).map {
             dto.copies = it.data.copys.copys
 
             dto
         }
-
- */
     }
 
     private fun generatePrompt(dtoRequest: CreateWebsiteRequest): String {
