@@ -26,21 +26,25 @@ class SaveProductsPhase(
             dto.request.productPrice
         )
 
-        val upsellProductSaved = this.createProduct(
-            dto,
-            dto.request.upSell.name,
-            dto.request.upSell.name,
-            listOf(dto.upsellImage),
-            dto.request.upSell.price
-        )
+        dto.request.upSell?.let {
+            val upsellProductSaved = this.createProduct(
+                dto,
+                it.name,
+                it.name,
+                listOf(dto.upsellImage?: ""),
+                it.price
+            )
 
-        if (dto.request.downSell != null) {
-            val downsellOffer = createUpsellOffer(upsellProductSaved.id, dto)
+            if (dto.request.downSell != null) {
+                createUpsellOffer(upsellProductSaved.id, dto)
+            }
+
+            dto.upsellProductId = upsellProductSaved.id
+            dto.downsellProductId = upsellProductSaved.id
         }
 
         dto.mainProductId = productSaved.id
-        dto.upsellProductId = upsellProductSaved.id
-        dto.downsellProductId = upsellProductSaved.id
+
 
         return Mono.just(dto)
     }
@@ -68,8 +72,8 @@ class SaveProductsPhase(
     private fun createUpsellOffer(productIdUpsell: String, dto: WebsiteDirectorDTO): Offer {
         val upsellProduct = Offer().apply {
             ownerId = dto.request.userIdNotNull()
-            name = dto.request.upSell.name
-            description = dto.request.upSell.name
+            name = dto.request.upSell!!.name
+            description = dto.request.upSell!!.name
             enabled = true
             discountType = DiscountType.PERCENTAGE
             discountValue = (dto.request.downSell!!.price)
