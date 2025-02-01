@@ -9,6 +9,7 @@ import com.fluxi.order.models.OrderModification
 import com.fluxi.websites.models.Website
 import com.fluxi.websites.requests.CreateOrderWebsiteRequest
 import com.fluxi.websites.requests.ModificationRequest
+import com.fluxi.websites.requests.UpdateWebsiteRequest
 import reactor.core.publisher.Mono
 
 @Controller("/websites")
@@ -33,6 +34,15 @@ class WebsiteController(
         @Header("owner-id") ownerId: String
     ): Website {
         return websiteService.findWebSite(ownerId, websiteId)
+    }
+
+    @Put("/{websiteId}")
+    fun find(
+        @PathVariable(value = "websiteId") websiteId: String,
+        @Header("owner-id") ownerId: String,
+        @Body updateWebsiteRequest: UpdateWebsiteRequest
+    ): Website {
+        return websiteService.updateWebsite(ownerId, websiteId, updateWebsiteRequest)
     }
 
     @Post("/{websiteId}/create-order")

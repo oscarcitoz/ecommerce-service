@@ -16,9 +16,11 @@ import com.fluxi.websites.repositories.WebsiteRepository
 import com.fluxi.websites.requests.CreateOrderWebsiteRequest
 import com.fluxi.websites.requests.CreateWebsiteRequest
 import com.fluxi.websites.requests.ModificationRequest
+import com.fluxi.websites.requests.UpdateWebsiteRequest
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.exceptions.HttpStatusException
 import reactor.core.publisher.Mono
+import java.time.LocalDateTime
 
 @Singleton
 class WebsiteService(
@@ -86,6 +88,23 @@ class WebsiteService(
             this.orderModificationType = typeModification
             this.raw = mapOf("product_id" to website.productId, "units" to (modificationRequest.units ?: 0))
         }, hashOrderId)
+    }
+
+    override fun updateWebsite(
+        ownerId: String,
+        websiteId: String,
+        updateWebsiteRequest: UpdateWebsiteRequest
+    ): Website {
+        val website = this.websiteRepository.findById(websiteId)
+            .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "NOT EXITS WEBSITE") }
+
+        if (website.ownerId != ownerId) throw HttpStatusException(HttpStatus.BAD_REQUEST, "The website is not your")
+
+        website.url = updateWebsiteRequest.url ?: website.url
+        website.status = updateWebsiteRequest.status ?: website.status
+        website.updatedAt = LocalDateTime.now()
+
+        return this.websiteRepository.update(website)
     }
 
     private fun getTypeModification(websiteType: String, modificationRequest: ModificationRequest): String {
