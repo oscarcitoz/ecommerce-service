@@ -23,7 +23,6 @@ class WebsiteController(
     @ExecuteOn(TaskExecutors.IO)
     @Post("/")
     fun create(@Body websiteRequest: CreateWebsiteRequest): Mono<Website> {
-        println(websiteRequest)
         return websiteService.create(websiteRequest)
     }
 
