@@ -1,6 +1,5 @@
 package com.fluxi.websites.controllers
 
-import WebsiteResponseDTO
 import com.fluxi.websites.requests.CreateWebsiteRequest
 import io.micronaut.http.annotation.*
 import com.fluxi.websites.services.*

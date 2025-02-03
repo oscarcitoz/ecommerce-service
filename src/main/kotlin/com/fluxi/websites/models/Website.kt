@@ -1,6 +1,5 @@
 package com.fluxi.websites.models
 
-import WebsiteResponseDTO
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.hypersistence.utils.hibernate.type.json.JsonType
 import io.micronaut.data.annotation.Where
@@ -120,31 +119,4 @@ class WebsiteType {
         val UPSELL = "upsell"
         val DOWNSELL = "downsell"
     }
-}
-
-fun Website.toResponseDTO(): WebsiteResponseDTO {
-    return WebsiteResponseDTO(
-        id = this.id,
-        ownerId = this.ownerId,
-        productId = this.productId,
-        productDescription = this.productDescription,
-        productWarranties = this.productWarranties,
-        url = this.url,
-        price = this.price,
-        name = this.name,
-        copies = this.copies,
-        images = this.images,
-        status = this.status,
-        templateDesign = this.templateDesign,
-        upsellProductId = this.upsellProductId,
-        upsellProductPrice = this.upsellProductPrice,
-        upsellProductImage = this.upsellProductImage,
-        downSellProductId = this.downSellProductId,
-        downSellProductPrice = this.downSellProductPrice,
-        downSellProductPriceWithDiscount = this.downSellProductPriceWithDiscount, // Agregado
-        downSellProductImage = this.downSellProductImage,
-        createdAt = this.createdAt,  // Agregado
-        updatedAt = this.updatedAt,  // Agregado
-        deletedAt = this.deletedAt
-    )
 }

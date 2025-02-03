@@ -13,7 +13,6 @@ open class WebsiteDirector(
 ): WebsiteDirectorInterface {
 
     override fun make(createWebsiteRequest: CreateWebsiteRequest): Mono<Website> {
-
         val websiteDTO = this.initDTO(createWebsiteRequest)
 
         val monoWebsite = Mono.just(websiteDTO)
