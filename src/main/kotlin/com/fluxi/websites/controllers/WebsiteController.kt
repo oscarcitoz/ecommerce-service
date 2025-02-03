@@ -1,5 +1,6 @@
 package com.fluxi.websites.controllers
 
+import WebsiteResponseDTO
 import com.fluxi.websites.requests.CreateWebsiteRequest
 import io.micronaut.http.annotation.*
 import com.fluxi.websites.services.*
@@ -22,6 +23,7 @@ class WebsiteController(
     @ExecuteOn(TaskExecutors.IO)
     @Post("/")
     fun create(@Body websiteRequest: CreateWebsiteRequest): Mono<Website> {
+        println(websiteRequest)
         return websiteService.create(websiteRequest)
     }
 

@@ -19,6 +19,7 @@ class ImagesWebsitePhase(
         return Mono.zip(
             uploadImages(dto.request.productImages, dto.request.userId == null, dto.request.userId ?: dto.request.email ?: "", "product-images"),
             uploadImageIfExists(dto.request.upSell?.image, dto.request.userId == null, dto.request.userId ?: dto.request.email ?: "", "upsell-image"),
+            uploadImageIfExists(dto.request.downSell?.image, dto.request.userId == null, dto.request.userId ?: dto.request.email ?: "", "downsell-image"),
         ).map { tuple ->
             val productImages = tuple.t1
             val upsellImage = tuple.t2
