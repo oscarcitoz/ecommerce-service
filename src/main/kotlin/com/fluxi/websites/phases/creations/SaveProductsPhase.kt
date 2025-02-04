@@ -21,7 +21,7 @@ class SaveProductsPhase(
         val productSaved = this.createProduct(
             dto,
             dto.request.productName,
-            dto.request.productDescription,
+            dto.request.productDescription ?: dto.request.productName,
             dto.imagesProduct,
             dto.request.productPrice
         )
@@ -31,7 +31,7 @@ class SaveProductsPhase(
                 dto,
                 it.name,
                 it.name,
-                listOf(dto.upsellImage?: ""),
+                listOf(dto.upsellImage ?: ""),
                 it.price
             )
 
