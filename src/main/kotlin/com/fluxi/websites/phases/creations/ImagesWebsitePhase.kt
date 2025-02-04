@@ -23,10 +23,11 @@ class ImagesWebsitePhase(
         ).map { tuple ->
             val productImages = tuple.t1
             val upsellImage = tuple.t2
+            val downsellImage = tuple.t3
 
             dto.imagesProduct = productImages.map { it.s3Url }
             dto.upsellImage = upsellImage.s3Url
-            dto.downSellImage = upsellImage.s3Url
+            dto.downSellImage = downsellImage.s3Url
 
             dto
         }

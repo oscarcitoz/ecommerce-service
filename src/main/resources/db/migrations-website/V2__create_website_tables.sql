@@ -1,5 +1,5 @@
 ALTER TABLE website
-    ADD COLUMN product_description character varying(255);
+    ADD COLUMN product_description character varying(255) NOT NULL ;
 
 ALTER TABLE website
     ADD COLUMN product_warranties numeric CHECK (product_warranties >= 0 AND product_warranties <= 100);

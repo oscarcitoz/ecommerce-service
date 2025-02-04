@@ -33,7 +33,7 @@ class Website {
 
     @Column(name = "product_warranties")
     @field:JsonProperty("product_warranties")
-    var productWarranties: BigDecimal = BigDecimal.ZERO
+    var productWarranties: BigDecimal? = null
 
     @Column(name = "price", nullable = false)
     @field:JsonProperty("price")
@@ -63,7 +63,7 @@ class Website {
 
     @Column(name = "is_free_shipping")
     @field:JsonProperty("is_free_shipping")
-    var isFreeShipping: Boolean? = false
+    var isFreeShipping: Boolean? = null
 
     @field:Column(name = "template_design", columnDefinition = "jsonb")
     @field:JsonProperty("template_design")
