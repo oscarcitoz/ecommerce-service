@@ -7,6 +7,7 @@ import com.fluxi.websites.externals.requests.ImageS3Request
 import com.fluxi.websites.externals.responses.ImageS3Response
 import io.micronaut.core.annotation.Order
 import jakarta.inject.Singleton
+import org.slf4j.LoggerFactory
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
@@ -15,6 +16,8 @@ import reactor.core.publisher.Mono
 class ImagesWebsitePhase(
     private val imageS3Client: ImageS3Client
 ) : BaseCreationPhase {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     override fun apply(dto: WebsiteDirectorDTO): Mono<WebsiteDirectorDTO> {
         return Mono.zip(
             uploadImages(dto.request.productImages, dto.request.userId == null, dto.request.userId ?: dto.request.email ?: "", "product-images"),
@@ -62,6 +65,8 @@ class ImagesWebsitePhase(
             this.folder = folder
         }
 
-        return this.imageS3Client.upload(request).retry(2)
+        return this.imageS3Client.upload(request).retry(2).doOnError {
+            logger.error("ERROR_S3_REQUEST ", it)
+        }
     }
 }
