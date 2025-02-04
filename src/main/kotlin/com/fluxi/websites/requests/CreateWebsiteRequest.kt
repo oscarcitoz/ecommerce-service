@@ -14,7 +14,6 @@ class CreateWebsiteRequest {
     var productWarranty: BigDecimal? = null
     var productImages: List<String> = listOf()
     var productPrice: BigDecimal = BigDecimal.ZERO
-    var productDiscountPrice: Number? = null
     var paymentMethod: PaymentMethod? = null
     var upSell: UpSell? = null
     var downSell: DownSell? = null
