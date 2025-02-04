@@ -22,6 +22,7 @@ class CustomerRequest {
     var prefixPhone: String = ""
     var phone: String = ""
     var email: String = ""
+    @field:JsonProperty("last_name")
     var lastName: String = ""
 }
 

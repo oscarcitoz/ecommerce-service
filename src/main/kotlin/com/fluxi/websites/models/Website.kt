@@ -27,6 +27,14 @@ class Website {
     @field:JsonProperty("product_id")
     var productId: String = ""
 
+    @Column(name = "product_description")
+    @field:JsonProperty("product_description")
+    var productDescription: String = ""
+
+    @Column(name = "product_warranties")
+    @field:JsonProperty("product_warranties")
+    var productWarranties: BigDecimal? = null
+
     @Column(name = "price", nullable = false)
     @field:JsonProperty("price")
     var price: BigDecimal = BigDecimal.ZERO
@@ -52,6 +60,10 @@ class Website {
     @field:JsonProperty("status")
     @Column(name = "status")
     var status: String = WebsiteStatus.BUILDING
+
+    @Column(name = "is_free_shipping")
+    @field:JsonProperty("is_free_shipping")
+    var isFreeShipping: Boolean? = null
 
     @field:Column(name = "template_design", columnDefinition = "jsonb")
     @field:JsonProperty("template_design")

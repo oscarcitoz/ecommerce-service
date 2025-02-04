@@ -48,6 +48,17 @@ class WebsiteService(
         val website = this.websiteRepository.findById(websiteId)
             .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "NOT EXITS WEBSITE") }
 
+        val images = website.images
+        if (images.size < 11) {
+            val repeatedImages = ArrayList(images)
+            while (repeatedImages.size < 11) {
+                repeatedImages.addAll(images)
+            }
+            website.images = repeatedImages.take(11)
+        } else {
+            website.images = images.take(11)
+        }
+
         return website
     }
 

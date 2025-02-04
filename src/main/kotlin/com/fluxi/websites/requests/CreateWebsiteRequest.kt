@@ -10,15 +10,15 @@ import java.math.BigDecimal
 @Introspected
 class CreateWebsiteRequest {
     var productName: String = ""
-    var productDescription: String = ""
-    var productWarranty: String = ""
+    var productDescription: String? = null
+    var productWarranty: BigDecimal? = null
     var productImages: List<String> = listOf()
     var productPrice: BigDecimal = BigDecimal.ZERO
     var productDiscountPrice: Number? = null
-    var paymentMethod: PaymentMethod = PaymentMethod()
+    var paymentMethod: PaymentMethod? = null
     var upSell: UpSell? = null
     var downSell: DownSell? = null
-    var isFreeShipping: Boolean = false
+    var isFreeShipping: Boolean? = null
     var templateDesign: Map<String, Any>? = null
     var userId: String? = null
     var email: String? = null

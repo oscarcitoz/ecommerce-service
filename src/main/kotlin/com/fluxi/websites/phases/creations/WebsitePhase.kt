@@ -22,6 +22,8 @@ class WebsitePhase(
         dto.website.id = generateId()
         dto.website.copies = dto.copies
         dto.website.name = dto.request.productName
+        dto.website.productDescription = dto.request.productDescription
+        dto.website.productWarranties = dto.request.productWarranty
         dto.website.price = dto.request.productPrice
         dto.website.ownerId = dto.request.userIdNotNull()
         dto.website.images = dto.imagesProduct
@@ -35,6 +37,7 @@ class WebsitePhase(
         dto.website.downSellProductPriceWithDiscount = this.calculateDiscount(dto)
         dto.website.status = WebsiteStatus.BUILDING
         dto.website.templateDesign = dto.request.templateDesign
+        dto.website.isFreeShipping = dto.request.isFreeShipping
 
         websiteRepository.save(dto.website)
 
