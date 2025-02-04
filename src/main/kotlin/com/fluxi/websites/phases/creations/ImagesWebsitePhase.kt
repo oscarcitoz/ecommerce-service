@@ -1,6 +1,7 @@
 package com.fluxi.websites.phases.creations
 
 import com.fluxi.core.extensions.generateId
+import com.fluxi.core.extensions.logError
 import com.fluxi.websites.dtos.WebsiteDirectorDTO
 import com.fluxi.websites.externals.clients.ImageS3Client
 import com.fluxi.websites.externals.requests.ImageS3Request
@@ -20,9 +21,24 @@ class ImagesWebsitePhase(
 
     override fun apply(dto: WebsiteDirectorDTO): Mono<WebsiteDirectorDTO> {
         return Mono.zip(
-            uploadImages(dto.request.productImages, dto.request.userId == null, dto.request.userId ?: dto.request.email ?: "", "product-images"),
-            uploadImageIfExists(dto.request.upSell?.image, dto.request.userId == null, dto.request.userId ?: dto.request.email ?: "", "upsell-image"),
-            uploadImageIfExists(dto.request.downSell?.image, dto.request.userId == null, dto.request.userId ?: dto.request.email ?: "", "downsell-image"),
+            uploadImages(
+                dto.request.productImages,
+                dto.request.userId == null,
+                dto.request.userId ?: dto.request.email ?: "",
+                "product-images"
+            ),
+            uploadImageIfExists(
+                dto.request.upSell?.image,
+                dto.request.userId == null,
+                dto.request.userId ?: dto.request.email ?: "",
+                "upsell-image"
+            ),
+            uploadImageIfExists(
+                dto.request.downSell?.image,
+                dto.request.userId == null,
+                dto.request.userId ?: dto.request.email ?: "",
+                "downsell-image"
+            ),
         ).map { tuple ->
             val productImages = tuple.t1
             val upsellImage = tuple.t2
@@ -36,13 +52,18 @@ class ImagesWebsitePhase(
         }
     }
 
-    private fun uploadImages(images: List<String>, guest: Boolean, userId: String, prefix: String): Mono<List<ImageS3Response>> {
-        return Flux.fromIterable(images)
-            .flatMap { image -> uploadImage(image, guest, userId, prefix) }
-            .collectList()
+    private fun uploadImages(
+        images: List<String>, guest: Boolean, userId: String, prefix: String
+    ): Mono<List<ImageS3Response>> {
+        return Flux.fromIterable(images).flatMap { image -> uploadImage(image, guest, userId, prefix) }.collectList()
+            .doOnError {
+                it.logError(logger, "ERROR_ZIP_S3_REQUEST")
+            }
     }
 
-    private fun uploadImageIfExists(image: String?, guest: Boolean, userId: String, prefix: String): Mono<ImageS3Response> {
+    private fun uploadImageIfExists(
+        image: String?, guest: Boolean, userId: String, prefix: String
+    ): Mono<ImageS3Response> {
         return if (image.isNullOrBlank()) {
             Mono.just(ImageS3Response())
         } else {
@@ -66,7 +87,7 @@ class ImagesWebsitePhase(
         }
 
         return this.imageS3Client.upload(request).retry(2).doOnError {
-            logger.error("ERROR_S3_REQUEST ", it)
+            it.logError(logger, "ERROR_S3_REQUEST")
         }
     }
 }

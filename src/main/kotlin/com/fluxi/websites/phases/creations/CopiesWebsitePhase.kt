@@ -1,5 +1,6 @@
 package com.fluxi.websites.phases.creations
 
+import com.fluxi.core.extensions.logError
 import com.fluxi.websites.dtos.WebsiteDirectorDTO
 import com.fluxi.websites.externals.clients.CopyClient
 import com.fluxi.websites.externals.requests.CopyRequest
@@ -28,7 +29,7 @@ class CopiesWebsitePhase(
 
             dto
         }.retry(2).doOnError {
-            logger.error("ERROR_COPIES_REQUEST ", it)
+            it.logError(logger, "ERROR_COPIES_REQUEST")
         }
     }
 
