@@ -11,7 +11,7 @@ import java.math.BigDecimal
 class CreateWebsiteRequest {
     var productName: String = ""
     var productDescription: String = ""
-    var productWarranty: String = ""
+    var productWarranty: BigDecimal? = null
     var productImages: List<String> = listOf()
     var productPrice: BigDecimal = BigDecimal.ZERO
     var productDiscountPrice: Number? = null

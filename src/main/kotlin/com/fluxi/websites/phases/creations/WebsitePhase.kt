@@ -23,7 +23,7 @@ class WebsitePhase(
         dto.website.copies = dto.copies
         dto.website.name = dto.request.productName
         dto.website.productDescription = dto.request.productDescription
-        dto.website.productWarranties = BigDecimal(dto.request.productWarranty)
+        dto.website.productWarranties = dto.request.productWarranty
         dto.website.price = dto.request.productPrice
         dto.website.ownerId = dto.request.userIdNotNull()
         dto.website.images = dto.imagesProduct
