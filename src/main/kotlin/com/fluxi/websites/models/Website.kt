@@ -29,7 +29,7 @@ class Website {
 
     @Column(name = "product_description")
     @field:JsonProperty("product_description")
-    var productDescription: String = ""
+    var productDescription: String? = ""
 
     @Column(name = "product_warranties")
     @field:JsonProperty("product_warranties")
