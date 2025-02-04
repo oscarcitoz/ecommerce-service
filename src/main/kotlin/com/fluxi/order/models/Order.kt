@@ -1,11 +1,12 @@
 package com.fluxi.order.models
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fluxi.core.constants.DATE_STRING_FORMAT
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import kotlin.jvm.Transient
 
 @PersistenceContext(name = "order")
 @Serdeable
@@ -30,10 +31,12 @@ class Order {
     @field:JsonProperty("hash_id")
     var hashId: String = ""
 
+    @JsonFormat(pattern= DATE_STRING_FORMAT)
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
 
+    @JsonFormat(pattern= DATE_STRING_FORMAT)
     @Column(name = "updated_at", nullable = false)
     @field:JsonProperty("updated_at")
     var updatedAt: LocalDateTime = LocalDateTime.now()
@@ -45,7 +48,7 @@ class Order {
     @Column(name = "total_value_with_discount", nullable = false)
     @field:JsonProperty("total_value_with_discount")
     var totalValueWithDiscount: BigDecimal = BigDecimal.ZERO
-    
+
     fun activeOrder(): Boolean {
         return OrderState.activeStates().contains(this.state)
     }

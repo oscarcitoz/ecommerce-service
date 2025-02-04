@@ -3,6 +3,7 @@ package com.fluxi.order.controllers
 import com.fluxi.order.models.Order
 import com.fluxi.order.models.OrderModification
 import com.fluxi.order.requests.CreateOrderRequest
+import com.fluxi.order.responses.OrderDashboard
 import com.fluxi.order.services.OrderServiceInterface
 import io.micronaut.http.annotation.*
 
@@ -46,5 +47,12 @@ class OrderController(private val orderService: OrderServiceInterface) {
         }
 
         return orderService.orderModificationHash(orderModification, hashId)
+    }
+
+    @Get("/dashboard")
+    fun dashboard(
+        @Header("owner-id") ownerId: String
+    ): OrderDashboard {
+        return orderService.dashboard(ownerId)
     }
 } 

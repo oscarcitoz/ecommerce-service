@@ -1,6 +1,8 @@
 package com.fluxi.order.models
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fluxi.core.constants.DATE_STRING_FORMAT
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -28,6 +30,7 @@ class OrderStore {
     @field:JsonProperty("email")
     var email: String = ""
 
+    @JsonFormat(pattern= DATE_STRING_FORMAT)
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()

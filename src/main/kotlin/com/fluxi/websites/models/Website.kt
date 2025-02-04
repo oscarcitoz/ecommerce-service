@@ -1,6 +1,8 @@
 package com.fluxi.websites.models
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fluxi.core.constants.DATE_STRING_FORMAT
 import io.hypersistence.utils.hibernate.type.json.JsonType
 import io.micronaut.data.annotation.Where
 import io.micronaut.serde.annotation.Serdeable
@@ -98,12 +100,15 @@ class Website {
     @field:JsonProperty("down_sell_product_image")
     var downSellProductImage: String? = null
 
+    @JsonFormat(pattern= DATE_STRING_FORMAT)
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
 
+    @JsonFormat(pattern= DATE_STRING_FORMAT)
     @field:JsonProperty("updated_at")
     var updatedAt: LocalDateTime = LocalDateTime.now()
 
+    @JsonFormat(pattern= DATE_STRING_FORMAT)
     @Column(name = "deleted_at")
     @field:JsonProperty("deleted_at")
     var deletedAt: LocalDateTime? = null
