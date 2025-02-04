@@ -8,6 +8,7 @@ import com.fluxi.order.repositories.OrderModificationRepository
 import jakarta.inject.Singleton
 import com.fluxi.order.repositories.OrderRepository
 import com.fluxi.order.requests.CreateOrderRequest
+import com.fluxi.order.responses.OrderDashboard
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.exceptions.HttpStatusException
 import io.micronaut.transaction.annotation.Transactional
@@ -17,7 +18,7 @@ open class OrderService(
     private val orderDirector: OrderDirector,
     private val orderModifications: List<BaseOrderModification>,
     private val orderModificationRepository: OrderModificationRepository,
-    private val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository,
 ) : OrderServiceInterface {
     override fun createOrder(request: CreateOrderRequest): Order {
         return this.orderDirector.make(request)
@@ -48,5 +49,21 @@ open class OrderService(
         orderModification.orderId = order.id!!
 
         return this.orderModification(orderModification)
+    }
+
+    override fun dashboard(ownerId: String): OrderDashboard {
+        val orders = this.orderRepository.findByOwnerId(ownerId)
+
+        return OrderDashboard().apply {
+            this.orders = orders
+            this.summary.apply {
+                this.totalUnits = orders.sumOf { it.totalUnits }
+                this.totalValueWithDiscount = orders.sumOf { it.totalValueWithDiscount }
+                this.totalValue = orders.sumOf { it.totalValue }
+                this.totalBuyers = orders.distinctBy {
+                    "${it.customerEmail}-${it.customerPrefixPhone}-${it.customerPhone}"
+                }.size
+            }
+        }
     }
 } 

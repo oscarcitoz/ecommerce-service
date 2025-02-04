@@ -41,6 +41,7 @@ class OrderProductOffer {
     @field:JsonProperty("ends_at")
     var endsAt: LocalDateTime = LocalDateTime.now()
 
+    @JsonFormat(pattern= DATE_STRING_FORMAT)
     @Column(name = "created_at", nullable = false)
     @field:JsonProperty("created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
