@@ -28,7 +28,7 @@ class CopiesWebsitePhase(
             dto.copies = it.data.copys
 
             dto
-        }.retry(2).doOnError {
+        }.retry(1).doOnError {
             it.logError(logger, "ERROR_COPIES_REQUEST")
         }
     }

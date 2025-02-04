@@ -86,7 +86,7 @@ class ImagesWebsitePhase(
             this.folder = folder
         }
 
-        return this.imageS3Client.upload(request).retry(2).doOnError {
+        return this.imageS3Client.upload(request).retry(1).doOnError {
             it.logError(logger, "ERROR_S3_REQUEST")
         }
     }
