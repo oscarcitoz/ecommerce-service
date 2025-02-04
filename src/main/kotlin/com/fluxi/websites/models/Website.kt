@@ -61,6 +61,10 @@ class Website {
     @Column(name = "status")
     var status: String = WebsiteStatus.BUILDING
 
+    @Column(name = "is_free_shipping")
+    @field:JsonProperty("is_free_shipping")
+    var isFreeShipping: Boolean? = false
+
     @field:Column(name = "template_design", columnDefinition = "jsonb")
     @field:JsonProperty("template_design")
     @field:Type(JsonType::class)

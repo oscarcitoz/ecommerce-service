@@ -8,8 +8,6 @@ CREATE TABLE website
     id                                    character varying(100) PRIMARY KEY,
     owner_id                              character varying(100)      NOT NULL,
     product_id                            character varying(100)      NOT NULL,
-    product_description                   character varying(100)      NOT NULL,
-    product_warranties                    numeric CHECK (product_warranties >= 0 AND product_warranties <= 100) NOT NULL,
     price                                 numeric(15, 2)              NOT NULL,
     name                                  character varying(255)      NOT NULL,
     status                                character varying(255)      NOT NULL,
@@ -50,3 +48,14 @@ RETURNING "id";
 INSERT INTO "public"."website_status"("id")
 VALUES ('HIDDEN')
 RETURNING "id";
+
+
+ALTER TABLE website
+    ADD COLUMN product_description character varying(255);
+
+ALTER TABLE website
+    ADD COLUMN product_warranties numeric CHECK (product_warranties >= 0 AND product_warranties <= 100);
+
+ALTER TABLE website
+    ADD COLUMN is_free_shipping BOOLEAN;
+

@@ -37,6 +37,7 @@ class WebsitePhase(
         dto.website.downSellProductPriceWithDiscount = this.calculateDiscount(dto)
         dto.website.status = WebsiteStatus.BUILDING
         dto.website.templateDesign = dto.request.templateDesign
+        dto.website.isFreeShipping = dto.request.isFreeShipping
 
         websiteRepository.save(dto.website)
 
