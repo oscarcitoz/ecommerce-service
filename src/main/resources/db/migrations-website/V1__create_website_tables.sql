@@ -48,4 +48,3 @@ RETURNING "id";
 INSERT INTO "public"."website_status"("id")
 VALUES ('HIDDEN')
 RETURNING "id";
-
