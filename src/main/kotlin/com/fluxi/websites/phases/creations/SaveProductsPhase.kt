@@ -21,7 +21,7 @@ class SaveProductsPhase(
         val productSaved = this.createProduct(
             dto,
             dto.request.productName,
-            dto.request.productDescription ?: dto.request.productName,
+            dto.request.productDescription,
             dto.imagesProduct,
             dto.request.productPrice
         )

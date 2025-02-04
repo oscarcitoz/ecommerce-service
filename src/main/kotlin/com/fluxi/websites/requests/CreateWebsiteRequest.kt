@@ -10,7 +10,7 @@ import java.math.BigDecimal
 @Introspected
 class CreateWebsiteRequest {
     var productName: String = ""
-    var productDescription: String? = null
+    var productDescription: String = ""
     var productWarranty: BigDecimal? = null
     var productImages: List<String> = listOf()
     var productPrice: BigDecimal = BigDecimal.ZERO
