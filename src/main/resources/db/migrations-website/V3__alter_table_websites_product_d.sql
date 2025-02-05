@@ -1,0 +1,1 @@
+ALTER TABLE website ALTER COLUMN product_description TYPE text;

@@ -4,12 +4,16 @@ import io.micronaut.core.annotation.Introspected
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.exceptions.HttpStatusException
 import io.micronaut.serde.annotation.Serdeable
+import jakarta.validation.constraints.Size
 import java.math.BigDecimal
 
 @Serdeable
 @Introspected
 class CreateWebsiteRequest {
+    @field:Size(max = 255, message = "product name can have a maximum of 255 characters")
     var productName: String = ""
+
+    @field:Size(max = 500, message = "product description can have a maximum of 500 characters")
     var productDescription: String = ""
     var productWarranty: BigDecimal? = null
     var productImages: List<String> = listOf()
@@ -23,7 +27,10 @@ class CreateWebsiteRequest {
     var email: String? = null
 
     fun userIdNotNull(): String {
-        return this.userId ?: this.email ?: throw HttpStatusException(HttpStatus.BAD_REQUEST, "NOT USER ID WITHOUT EMAIL")
+        return this.userId ?: this.email ?: throw HttpStatusException(
+            HttpStatus.BAD_REQUEST,
+            "NOT USER ID WITHOUT EMAIL"
+        )
     }
 }
 
@@ -39,7 +46,6 @@ class UpSell {
 @Introspected
 class DownSell {
     var name: String = ""
-    //TODO CALCULATE PRICE_WITH_DISCOUNT
     var price: BigDecimal = BigDecimal.ZERO
     var percentage: Int = 0
     var image: String = ""
