@@ -34,10 +34,7 @@ class CopiesWebsitePhase(
     }
 
     private fun generatePrompt(dtoRequest: CreateWebsiteRequest): String {
-        return """
-            Nombre del producto: ${dtoRequest.productName}
-            Descripción del producto: ${dtoRequest.productDescription}
-        """.trimIndent()
+        return """${dtoRequest.productName} ${dtoRequest.productDescription}""".trimIndent()
     }
 }
 
