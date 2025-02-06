@@ -20,7 +20,7 @@ class DeclinedUpSellModification(
     override fun makeModification(orderModification: OrderModification): OrderModification {
         val orderStore = this.orderStoreRepository.findByOrderId(orderModification.orderId)
             .orElseThrow { throw HttpStatusException(HttpStatus.BAD_REQUEST, "Order Store Not Exists") }
-        val productId = orderModification.raw?.get("productId") as? String ?: ""
+        val productId = orderModification.raw?.get("product_id") as? String ?: ""
         val offerCustomers = this.offerServiceInterface.findByOwnerId(orderStore.ownerId).filter {
             it.productId == productId
         }.map {
