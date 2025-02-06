@@ -1,5 +1,6 @@
 package com.fluxi.websites.requests
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.micronaut.core.annotation.Introspected
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.exceptions.HttpStatusException
@@ -39,7 +40,9 @@ class CreateWebsiteRequest {
 class UpSell {
     var name: String = ""
     var price: BigDecimal = BigDecimal.ZERO
-    var image: String = ""
+    var image: String? = null
+    @field:JsonProperty("url_image")
+    var urlImage: String? = null
 }
 
 @Serdeable
@@ -48,7 +51,9 @@ class DownSell {
     var name: String = ""
     var price: BigDecimal = BigDecimal.ZERO
     var percentage: Int = 0
-    var image: String = ""
+    var image: String? = null
+    @field:JsonProperty("url_image")
+    var urlImage: String? = null
 }
 
 @Serdeable

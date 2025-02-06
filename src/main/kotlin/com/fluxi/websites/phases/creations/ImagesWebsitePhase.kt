@@ -31,13 +31,15 @@ class ImagesWebsitePhase(
                 dto.request.upSell?.image,
                 dto.request.userId == null,
                 dto.request.userId ?: dto.request.email ?: "",
-                "upsell-image"
+                "upsell-image",
+                dto.request.upSell?.urlImage
             ),
             uploadImageIfExists(
                 dto.request.downSell?.image,
                 dto.request.userId == null,
                 dto.request.userId ?: dto.request.email ?: "",
-                "downsell-image"
+                "downsell-image",
+                dto.request.downSell?.urlImage
             ),
         ).map { tuple ->
             val productImages = tuple.t1
@@ -62,9 +64,13 @@ class ImagesWebsitePhase(
     }
 
     private fun uploadImageIfExists(
-        image: String?, guest: Boolean, userId: String, prefix: String
+        image: String?, guest: Boolean, userId: String, prefix: String, urlImage: String?
     ): Mono<ImageS3Response> {
-        return if (image.isNullOrBlank()) {
+        return if (urlImage != null) {
+            Mono.just(ImageS3Response().apply {
+                this.s3Url = urlImage
+            })
+        } else if (image.isNullOrBlank()) {
             Mono.just(ImageS3Response())
         } else {
             uploadImage(image, guest, userId, prefix)
