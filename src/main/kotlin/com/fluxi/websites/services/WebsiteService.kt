@@ -99,9 +99,9 @@ class WebsiteService(
         return this.orderServiceInterface.orderModificationHash(OrderModification().apply {
             this.orderModificationType = typeModification
             val productId =
-                if (typeModification == OrderModificationType.CONFIRM_UP_SELL || typeModification == OrderModificationType.CONFIRM_UP_SELL) {
+                if (typeModification == OrderModificationType.CONFIRM_UP_SELL || typeModification == OrderModificationType.DECLINED_UP_SELL) {
                     website.upsellProductId
-                } else if (typeModification == OrderModificationType.CONFIRM_DOWN_SELL || OrderModificationType.DECLINED_DOWN_SELL) {
+                } else if (typeModification == OrderModificationType.CONFIRM_DOWN_SELL || typeModification == OrderModificationType.DECLINED_DOWN_SELL) {
                     website.downSellProductId
                 } else website.productId
 
