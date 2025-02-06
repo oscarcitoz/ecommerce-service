@@ -76,7 +76,7 @@ class SaveProductsPhase(
             description = dto.request.upSell!!.name
             enabled = true
             discountType = DiscountType.PERCENTAGE
-            discountValue = (dto.request.downSell!!.price)
+            discountValue = (dto.request.downSell!!.percentage.toBigDecimal())
             productId = productIdUpsell
         }
 
