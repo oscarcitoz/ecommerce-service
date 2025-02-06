@@ -55,7 +55,7 @@ open class OrderService(
         val orders = this.orderRepository.findByOwnerId(ownerId)
 
         return OrderDashboard().apply {
-            this.orders = orders
+            this.orders = orders.sortedByDescending { it.createdAt }
             this.summary.apply {
                 this.totalUnits = orders.sumOf { it.totalUnits }
                 this.totalValueWithDiscount = orders.sumOf { it.totalValueWithDiscount }

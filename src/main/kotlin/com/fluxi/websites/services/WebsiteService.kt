@@ -98,7 +98,15 @@ class WebsiteService(
 
         return this.orderServiceInterface.orderModificationHash(OrderModification().apply {
             this.orderModificationType = typeModification
-            this.raw = mapOf("product_id" to website.productId, "units" to (modificationRequest.units ?: 0))
+            val productId =
+                if (typeModification == OrderModificationType.CONFIRM_UP_SELL || typeModification == OrderModificationType.DECLINED_UP_SELL) {
+                    website.upsellProductId
+                } else if (typeModification == OrderModificationType.CONFIRM_DOWN_SELL || typeModification == OrderModificationType.DECLINED_DOWN_SELL) {
+                    website.downSellProductId
+                } else website.productId
+
+
+            this.raw = mapOf("product_id" to (productId ?: ""), "units" to (modificationRequest.units ?: 0))
         }, hashOrderId)
     }
 
@@ -115,7 +123,12 @@ class WebsiteService(
         website.url = updateWebsiteRequest.url ?: website.url
         website.status = updateWebsiteRequest.status ?: website.status
         website.updatedAt = LocalDateTime.now()
-        this.websiteRepository.updateWebsiteStatusUrlAndUpdatedAt(websiteId, website.status, website.url, website.updatedAt)
+        this.websiteRepository.updateWebsiteStatusUrlAndUpdatedAt(
+            websiteId,
+            website.status,
+            website.url,
+            website.updatedAt
+        )
 
         return website
     }
